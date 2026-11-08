@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Will Murphy's Journey</title>
+  <meta name="description" content="Will Murphy: from Iowa to Austin, Waco, and Houston.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="journey">
+  <header class="site-nav">
+    <a class="brand" href="index.html">Will Murphy</a>
+    <ul class="nav-links">
+      <li><a href="index.html" aria-current="page">Journey</a></li>
+      <li><a href="interests.html">Interests</a></li>
+      <li><a href="accomplishments.html">Accomplishments</a></li>
+      <li><a class="nav-resume" href="assets/Will-Murphy-Resume.pdf" download>Résumé</a></li>
+    </ul>
+  </header>
+
+  <div id="map" aria-hidden="true"></div>
+  <div class="paper-overlay" aria-hidden="true"></div>
+  <nav id="rail" class="rail" aria-label="Timeline stops"></nav>
+
+  <main id="story">
+    <section class="step hero">
+      <h1>Will Murphy's<br><em>Journey</em></h1>
+      <p class="hero-sub">Iowa &rarr; Austin &rarr; Waco &rarr; Houston</p>
+      <a class="scroll-cue" href="#iowa">Scroll to begin<span></span></a>
+    </section>
+
+    <!-- Chapters and travel interludes are inserted here from js/data.js -->
+
+    <section class="step outro">
+      <article class="card" style="--c: var(--coral)">
+        <p class="card-years">The journey so far</p>
+        <h2>Thanks for following along.</h2>
+        <p>[One warm closing line: what you're looking for next, or how you'd like people to reach out.]</p>
+        <div class="btn-row">
+          <a class="btn" href="assets/Will-Murphy-Resume.pdf" download>Download résumé</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-ghost" href="https://YOUR-HANDLE.substack.com" target="_blank" rel="noopener">Substack</a>
+        </div>
+        <p class="more">Want more? See what I'm <a href="interests.html">interested in</a> and what I've <a href="accomplishments.html">accomplished</a>.</p>
+      </article>
+    </section>
+  </main>
+
+  <div id="drawer-backdrop" class="drawer-backdrop"></div>
+  <aside id="drawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+    <button class="drawer-close" type="button">Close &times;</button>
+    <div id="drawer-body"></div>
+  </aside>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/journey.js"></script>
+</body>
+</html>

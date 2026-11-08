@@ -1,0 +1,272 @@
+/* ==========================================================================
+   Will Murphy's Journey — shared styles
+   Colors live here. Change a stop's color in js/data.js.
+   ========================================================================== */
+:root {
+  --paper: #F7F0E3;
+  --paper-2: #EFE4CF;
+  --ink: #2A2622;
+  --ink-soft: #5E554B;
+  --line: rgba(42, 38, 34, .14);
+  --card: rgba(255, 251, 244, .95);
+  --coral: #D9481F;
+  --teal: #0E7C72;
+  --blue: #2860C4;
+  --green: #2E7D46;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ---------- Nav ---------- */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px clamp(16px, 4vw, 40px);
+  background: linear-gradient(var(--paper) 30%, rgba(247, 240, 227, 0));
+}
+.brand { font-family: var(--serif); font-weight: 700; font-size: 18px; text-decoration: none; }
+.nav-links { display: flex; align-items: center; gap: 22px; list-style: none; margin: 0; padding: 0; }
+.nav-links a {
+  text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .02em;
+  padding: 6px 2px; border-bottom: 2px solid transparent; transition: border-color .2s;
+}
+.nav-links a:hover, .nav-links a[aria-current="page"] { border-color: var(--coral); }
+.nav-links a.nav-resume {
+  background: var(--ink); color: var(--paper); border: 0;
+  padding: 7px 15px; border-radius: 999px;
+}
+.nav-links a.nav-resume:hover { background: var(--coral); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  font: inherit; font-weight: 700; font-size: 15px;
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 0; border-radius: 999px; padding: 11px 18px; cursor: pointer;
+  text-decoration: none; background: var(--c, var(--coral)); color: #fff;
+  transition: transform .2s, box-shadow .2s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px -8px var(--c, var(--coral)); }
+.btn-ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
+.btn-ghost:hover { box-shadow: inset 0 0 0 1.5px var(--ink), 0 8px 18px -10px rgba(0,0,0,.4); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ==========================================================================
+   Journey page (index.html)
+   ========================================================================== */
+#map { position: fixed; inset: 0; z-index: 0; background: #EDE3CF; }
+/* the "vintage" look: warm sepia wash on the tiles only (pins stay bright) */
+#map .leaflet-tile-pane { filter: sepia(.6) saturate(.85) hue-rotate(-10deg) contrast(.92) brightness(1.04); }
+.leaflet-control-attribution { background: rgba(247, 240, 227, .85) !important; font-size: 10px; }
+
+.paper-overlay {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none; mix-blend-mode: multiply;
+  background:
+    radial-gradient(ellipse at center, transparent 55%, rgba(120, 90, 50, .22) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .35 0 0 0 0 .2 0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+#story { position: relative; z-index: 2; pointer-events: none; }
+#story .card, #story a, #story button { pointer-events: auto; }
+
+.step { position: relative; display: flex; align-items: center; padding: 0 clamp(16px, 5vw, 72px); }
+
+/* Hero */
+.hero {
+  min-height: 100vh; flex-direction: column; justify-content: flex-start;
+  padding-top: 17vh; text-align: center;
+}
+.hero h1 {
+  font-family: var(--serif); font-weight: 800;
+  font-size: clamp(50px, 9.5vw, 128px); line-height: .95; letter-spacing: -.02em; margin: 0;
+  text-shadow: 0 0 34px var(--paper), 0 0 14px var(--paper), 0 0 4px var(--paper);
+}
+.hero h1 em { font-style: italic; font-weight: 600; color: var(--coral); }
+.hero-sub {
+  margin: 22px 0 0; font-size: 13.5px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink-soft); background: rgba(247, 240, 227, .85); padding: 6px 16px; border-radius: 999px;
+}
+.scroll-cue {
+  position: absolute; bottom: 7vh; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft);
+  text-decoration: none;
+}
+.scroll-cue span {
+  width: 24px; height: 38px; border: 2px solid var(--ink-soft); border-radius: 14px; position: relative;
+}
+.scroll-cue span::after {
+  content: ""; position: absolute; left: 50%; top: 7px; width: 4px; height: 8px; margin-left: -2px;
+  border-radius: 2px; background: var(--coral); animation: wheel 1.8s ease-in-out infinite;
+}
+@keyframes wheel { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(14px); } }
+
+/* Chapter cards */
+.chapter { min-height: 115vh; }
+.card {
+  width: min(440px, 100%);
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 30px 30px 28px 34px; position: relative; overflow: hidden;
+  box-shadow: 0 22px 50px -26px rgba(60, 40, 20, .5);
+  opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease;
+}
+.card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--c, var(--coral)); }
+.is-active .card { opacity: 1; transform: none; }
+.card-num { font-family: var(--serif); font-size: 58px; font-weight: 800; line-height: 1; color: var(--c); }
+.card-years {
+  margin: 14px 0 4px; font-size: 12.5px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-soft);
+}
+.card h2 { font-family: var(--serif); font-weight: 700; font-size: 42px; line-height: 1.05; margin: 0; }
+.card-where { margin: 6px 0 0; font-family: var(--serif); font-style: italic; color: var(--ink-soft); }
+.card-blurb { margin: 16px 0 22px; }
+
+/* Travel interludes */
+.travel { min-height: 80vh; }
+.travel-inner { width: min(440px, 100%); opacity: 0; transition: opacity .6s ease; }
+.travel.is-active .travel-inner { opacity: 1; }
+.travel-when {
+  display: inline-block; padding: 4px 12px; border-radius: 999px; background: var(--c); color: #fff;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+}
+.travel-text {
+  margin: 14px 0 8px; font-family: var(--serif); font-size: clamp(26px, 3.4vw, 34px); line-height: 1.15;
+  text-shadow: 0 0 20px var(--paper), 0 0 8px var(--paper), 0 0 3px var(--paper);
+}
+.travel-route { font-size: 14px; font-weight: 500; color: var(--ink-soft); background: rgba(247, 240, 227, .9); padding: 2px 9px; border-radius: 6px; }
+
+/* Outro */
+.outro { min-height: 110vh; }
+.outro .card h2 { font-size: 36px; }
+.outro .card p { margin: 12px 0 22px; }
+.outro .more { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 15px; }
+.outro .more a { font-weight: 700; text-decoration-color: var(--coral); text-underline-offset: 3px; }
+
+/* Progress rail */
+.rail {
+  position: fixed; right: 24px; top: 50%; transform: translateY(-50%); z-index: 20;
+  display: flex; flex-direction: column; gap: 16px; opacity: 0; pointer-events: none; transition: opacity .4s;
+}
+.rail.show { opacity: 1; pointer-events: auto; }
+.rail a { display: flex; flex-direction: row-reverse; align-items: center; gap: 10px; text-decoration: none; font-size: 13px; font-weight: 700; }
+.rail .dot { width: 13px; height: 13px; border-radius: 50%; border: 2.5px solid var(--c); background: var(--paper); transition: transform .3s, background .3s; }
+.rail a.visited .dot { background: var(--c); }
+.rail a.current .dot { transform: scale(1.35); }
+.rail-label { opacity: 0; transform: translateX(6px); transition: .3s; background: var(--card); padding: 2px 9px; border-radius: 6px; }
+.rail a:hover .rail-label, .rail a.current .rail-label { opacity: 1; transform: none; }
+
+/* Map pins */
+.pin-wrap { background: none; border: 0; }
+.pin {
+  position: absolute; left: 0; top: 0; transform: translate(-50%, -50%);
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--paper); border: 2.5px solid var(--c); color: var(--c);
+  font: 700 11px var(--sans); box-shadow: 0 4px 10px -4px rgba(0, 0, 0, .45);
+  transition: transform .4s, background .4s, color .4s;
+}
+.pin-wrap.is-visited .pin { background: var(--c); color: #fff; }
+.pin-wrap.is-active .pin { transform: translate(-50%, -50%) scale(1.25); }
+.pin-wrap.is-active .pin::after {
+  content: ""; position: absolute; inset: -9px; border-radius: 50%; border: 2px solid var(--c); animation: pulse 2s ease-out infinite;
+}
+@keyframes pulse { from { opacity: .9; transform: scale(.7); } to { opacity: 0; transform: scale(1.5); } }
+.pin-label {
+  position: absolute; left: 22px; top: 0; transform: translateY(-50%); white-space: nowrap;
+  font: 600 14px var(--serif); background: rgba(247, 240, 227, .92); padding: 1px 9px; border-radius: 6px;
+  box-shadow: 0 2px 6px -3px rgba(0, 0, 0, .3);
+}
+.route { filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .18)); }
+
+/* Highlights drawer */
+.drawer-backdrop {
+  position: fixed; inset: 0; z-index: 40; background: rgba(42, 38, 34, .35);
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 41; width: min(500px, 100%);
+  background: var(--paper); border-left: 6px solid var(--c, var(--coral));
+  overflow-y: auto; padding: 26px clamp(20px, 4vw, 36px) 56px;
+  transform: translateX(105%); transition: transform .45s cubic-bezier(.2, .8, .2, 1);
+  box-shadow: -20px 0 50px -30px rgba(0, 0, 0, .5);
+}
+body.drawer-open .drawer { transform: none; }
+body.drawer-open .drawer-backdrop { opacity: 1; pointer-events: auto; }
+.drawer-close {
+  float: right; font: inherit; font-size: 14px; font-weight: 700; background: none; cursor: pointer;
+  border: 1.5px solid var(--ink); border-radius: 999px; padding: 6px 14px;
+}
+.drawer-close:hover { background: var(--ink); color: var(--paper); }
+.drawer .card-num { font-size: 44px; margin-top: 8px; }
+.drawer h2 { font-family: var(--serif); font-size: 38px; margin: 0; line-height: 1.05; }
+.drawer-intro { color: var(--ink-soft); margin: 10px 0 0; }
+.hl-list { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 14px; }
+.hl { background: #FFFAF1; border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+.hl-date { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c); }
+.hl h3 { font-family: var(--serif); font-size: 21px; margin: 4px 0 6px; line-height: 1.2; }
+.hl p { margin: 0; font-size: 15.5px; color: var(--ink-soft); }
+.hl img { border-radius: 8px; margin-top: 12px; }
+.hl a { display: inline-block; margin-top: 10px; font-weight: 700; font-size: 14.5px; color: var(--c); }
+
+/* ==========================================================================
+   Sub-pages (interests.html, accomplishments.html)
+   ========================================================================== */
+.page main { max-width: 1040px; margin: 0 auto; padding: 120px clamp(16px, 4vw, 40px) 80px; }
+.page-head { max-width: 640px; margin-bottom: 48px; }
+.eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--coral); margin: 0; }
+.page-head h1 { font-family: var(--serif); font-weight: 800; font-size: clamp(42px, 6vw, 68px); line-height: 1; margin: 10px 0 16px; letter-spacing: -.01em; }
+.page-head p { color: var(--ink-soft); margin: 0; font-size: 18px; }
+.section-title { font-family: var(--serif); font-size: 30px; margin: 56px 0 18px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+.tile {
+  background: #FFFAF1; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 24px; position: relative; overflow: hidden; transition: transform .25s, box-shadow .25s;
+}
+.tile::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--c, var(--coral)); }
+.tile:hover { transform: translateY(-3px); box-shadow: 0 16px 34px -22px rgba(60, 40, 20, .5); }
+.tile h3 { font-family: var(--serif); font-size: 22px; margin: 6px 0 8px; line-height: 1.2; }
+.tile p { margin: 0; color: var(--ink-soft); font-size: 15.5px; }
+.tile .tag { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--c, var(--coral)); }
+
+.feature {
+  display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; align-items: center;
+  background: #FFFAF1; border: 1px solid var(--line); border-radius: var(--radius); padding: 32px;
+}
+.feature h3 { font-family: var(--serif); font-size: 28px; margin: 6px 0 10px; }
+.feature p { color: var(--ink-soft); margin: 0 0 20px; }
+
+.site-footer {
+  border-top: 1px solid var(--line); padding: 28px clamp(16px, 4vw, 40px);
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--ink-soft);
+}
+.site-footer nav { display: flex; gap: 18px; }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 760px) {
+  .brand { display: none; }
+  .site-nav { justify-content: center; padding: 12px 16px; }
+  .nav-links { gap: 14px; }
+  .nav-links a { font-size: 13px; }
+  .nav-links a.nav-resume { padding: 6px 12px; }
+  .rail { display: none; }
+  .hero { padding-top: 20vh; }
+  .chapter, .travel, .outro { align-items: flex-end; padding-bottom: 9vh; }
+  .card { padding: 24px 22px 22px 26px; }
+  .card-num { font-size: 46px; }
+  .card h2 { font-size: 34px; }
+  .feature { grid-template-columns: 1fr; padding: 24px; }
+}
