@@ -52,11 +52,12 @@ window.JOURNEY = {
       blurb: 'Studying Finance at Baylor\'s Hankamer School of Business, and getting real deal experience along the way: angel investing, a student-run fund, and private equity.',
       intro: 'BBA in Finance, 3.92 GPA. Most of what I\'ve learned about investing started here.',
       highlights: [
-        { date: '2023 – Dec 2026', title: 'BBA in Finance · Baylor University', text: 'Hankamer School of Business, 3.92 GPA. Dean\'s Academic Honors List five semesters. Baylor Distinction Award and Achievement Baylor Scholarship.' },
+        { date: '2023 – 2027', title: 'BBA in Finance · Baylor University', text: 'Hankamer School of Business, 3.92 GPA. Dean\'s Academic Honors List five semesters. Baylor Distinction Award and Achievement Baylor Scholarship.' },
         { date: 'Oct 2025 – Mar 2026', title: 'Junior Analyst · Baylor Angel Network', text: 'Ran due diligence on two startups for the investment committee: their markets, financials, and risks. Worked with a senior analyst and angel mentors, then met founders and investors at Presentation Day.' },
         { date: 'Nov 2025 – May 2026', title: 'Member Educator · Sigma Alpha Epsilon', text: 'Taught 34 new members the chapter\'s history, values, and standards, and organized three cross-chapter mixers to build their professional communication skills.' },
         { date: 'Jan – May 2026', title: 'Equity Research · Hodges Fund', text: 'One of 15 students selected for the Industrials, Materials & Energy house of Baylor\'s $1.8M student-managed fund. Pitched an investment thesis to the faculty advisor and peer analysts; it was added to the portfolio as a position of more than $75,000.' },
-        { date: 'Aug 2026 – Now', title: 'Private Equity Intern · Oakdale Capital', text: 'Due diligence on a pre-revenue growth-equity deal: modeling the key business drivers, joining banker calls, and preparing questions for founders. I also sit in on pipeline meetings with new companies.' }
+        { date: 'Aug 2026 – Spring 2027', title: 'Private Equity Intern · Oakdale Capital', text: 'Due diligence on a pre-revenue growth-equity deal: modeling the key business drivers, joining banker calls, and preparing questions for founders. I also sit in on pipeline meetings with new companies, and I\'ll be working there full time in spring 2027.' },
+        { date: '2026 – 2027', title: 'Sing Chairman', text: '[What Sing is and what you led.]' }
       ]
     },
     {
@@ -68,11 +69,11 @@ window.JOURNEY = {
       coords: [29.7589, -95.3677],
       zoom: 14,
       color: '#2860C4',
-      blurb: '[One or two sentences about what\'s next in Houston, e.g. your role at Zions Capital Markets.]',
-      intro: '[Optional: a slightly longer intro for the highlights panel.]',
+      blurb: 'Next stop: downtown Houston, as a Syndication & Leverage Finance Analyst at Zions Capital Markets.',
+      intro: 'The next chapter, and the reason the map ends downtown.',
       highlights: [
-        { date: 'June 2027', title: '[Role, Company]', text: '[What you\'ll be doing and why you chose it.]' },
-        { date: '[Year]', title: '[How you got here]', text: '[Earlier experience that led to Houston.]' }
+        { date: '2027', title: 'Syndication & Leverage Finance Analyst · Zions Capital Markets', text: '[What you\'ll be doing and why you chose it.]' },
+        { date: '2025 – 2027', title: 'How I got here', text: 'Two summers of deal work back home in Austin, a student-managed fund and an angel network at Baylor, and a private equity internship at Oakdale Capital.' }
       ]
     }
   ],
