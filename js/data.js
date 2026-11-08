@@ -72,7 +72,7 @@ window.JOURNEY = {
       blurb: 'Next stop: downtown Houston, as a Syndication & Leverage Finance Analyst at Zions Capital Markets.',
       intro: 'The next chapter, and the reason the map ends downtown.',
       highlights: [
-        { date: '2027', title: 'Syndication & Leverage Finance Analyst · Zions Capital Markets', text: '[What you\'ll be doing and why you chose it.]' },
+        { date: '2027', title: 'Syndication & Leverage Finance Analyst · Zions Capital Markets', text: 'Joining the Syndication & Leverage Finance team at Zions Capital Markets in downtown Houston as an analyst.' },
         { date: '2025 – 2027', title: 'How I got here', text: 'Two summers of deal work back home in Austin, a student-managed fund and an angel network at Baylor, and a private equity internship at Oakdale Capital.' }
       ]
     }
