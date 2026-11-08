@@ -256,12 +256,19 @@ body.drawer-open .drawer-backdrop { opacity: 1; pointer-events: auto; }
 .site-footer nav { display: flex; gap: 18px; }
 
 /* ---------- Mobile ---------- */
+.brand-short { display: none; }
+body.journey { animation: pagein .7s ease both; }
+@keyframes pagein { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { body.journey { animation: none; } }
+
 @media (max-width: 760px) {
-  .brand { display: none; }
-  .site-nav { justify-content: center; padding: 12px 16px; }
-  .nav-links { gap: 14px; }
-  .nav-links a { font-size: 13px; }
-  .nav-links a.nav-resume { padding: 6px 12px; }
+  .brand { font-size: 15px; }
+  .brand-full { display: none; }
+  .brand-short { display: inline; }
+  .site-nav { padding: 12px 16px; }
+  .nav-links { gap: 10px; }
+  .nav-links a { font-size: 12.5px; }
+  .nav-links a.nav-resume { padding: 6px 11px; }
   .rail { display: none; }
   .hero { padding-top: 20vh; }
   .chapter, .travel, .outro { align-items: flex-end; padding-bottom: 9vh; }

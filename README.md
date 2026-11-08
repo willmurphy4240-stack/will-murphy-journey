@@ -6,8 +6,10 @@ A personal site: a scrolling vintage map that follows Iowa → Austin → Waco �
 
 | What | File |
 |---|---|
-| Timeline text, dates, highlights, map pins | `js/data.js` |
-| Closing card, LinkedIn/Substack links | `index.html` (search for `YOUR-HANDLE`) |
+| The desk (home page) and the panel text for each object | `index.html` (each panel is an `<article class="panel">`) |
+| Desk camera, drag, and zoom behavior | `js/desk.js`, `css/desk.css` |
+| Timeline text, dates, highlights, map pins | `js/data.js` (shown on `journey.html`) |
+| LinkedIn/Substack links | search all `.html` files for `YOUR-HANDLE` |
 | Interests | `interests.html` |
 | Projects, Substack, awards | `accomplishments.html` |
 | Colors and fonts | top of `css/styles.css` |

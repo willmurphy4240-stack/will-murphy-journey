@@ -2,62 +2,472 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Will Murphy's Journey</title>
-  <meta name="description" content="Will Murphy: from Iowa to Austin, Waco, and Houston.">
+  <meta name="description" content="Will Murphy: from Iowa to Austin, Waco, and Houston. Look around the desk and click anything.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/desk.css">
 </head>
-<body class="journey">
-  <header class="site-nav">
-    <a class="brand" href="index.html">Will Murphy</a>
-    <ul class="nav-links">
-      <li><a href="index.html" aria-current="page">Journey</a></li>
-      <li><a href="interests.html">Interests</a></li>
-      <li><a href="accomplishments.html">Accomplishments</a></li>
-      <li><a class="nav-resume" href="assets/Will-Murphy-Resume.pdf" download>Résumé</a></li>
-    </ul>
+<body class="desk">
+  <!-- ===================== The desk (drag / scroll to look around) ===================== -->
+  <div id="stage" class="stage">
+    <div id="world" class="world">
+      <svg viewBox="0 0 1600 1000" aria-label="Will's desk. Each object opens a section." role="group">
+        <defs>
+          <radialGradient id="golf" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#DADADA"/></radialGradient>
+          <radialGradient id="coffee" cx=".4" cy=".4" r=".7"><stop offset="0" stop-color="#6B4127"/><stop offset="1" stop-color="#3C2213"/></radialGradient>
+          <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F2D77E"/><stop offset="1" stop-color="#B8912E"/></linearGradient>
+        </defs>
+
+        <!-- ---------- Decor (not clickable) ---------- -->
+        <g class="decor" transform="translate(690 268)"><circle r="46" fill="none" stroke="#6A3F1C" stroke-opacity=".2" stroke-width="5"/></g>
+        <g class="decor" transform="translate(555 155)">
+          <rect x="44" y="-15" width="40" height="30" rx="14" fill="none" stroke="#EAE2D3" stroke-width="11"/>
+          <circle r="60" fill="#EFE8DC" stroke="#D6C9B2" stroke-width="2"/>
+          <circle r="48" fill="url(#coffee)"/>
+          <ellipse cx="-16" cy="-17" rx="15" ry="6" fill="#fff" opacity=".22" transform="rotate(-35 -16 -17)"/>
+        </g>
+        <g class="decor" transform="translate(585 595) rotate(-32)">
+          <path d="M-95,-7 L-114,0 L-95,7Z" fill="#D4AF37"/>
+          <rect x="-95" y="-7" width="190" height="14" rx="7" fill="#1F2A36"/>
+          <rect x="38" y="-8" width="58" height="16" rx="8" fill="#2A3B4E"/>
+          <rect x="48" y="-12" width="38" height="4" rx="2" fill="#D4AF37"/>
+        </g>
+        <g class="decor" transform="translate(1530 95)">
+          <circle r="66" fill="#B5603C"/>
+          <circle r="54" fill="#4A3020"/>
+          <g fill="#5E8C4E">
+            <ellipse rx="16" ry="44" transform="rotate(0) translate(0 -28)"/>
+            <ellipse rx="16" ry="44" transform="rotate(72) translate(0 -28)"/>
+            <ellipse rx="16" ry="44" transform="rotate(144) translate(0 -28)"/>
+            <ellipse rx="16" ry="44" transform="rotate(216) translate(0 -28)"/>
+            <ellipse rx="16" ry="44" transform="rotate(288) translate(0 -28)"/>
+          </g>
+          <g fill="#7FAF68">
+            <ellipse rx="11" ry="28" transform="rotate(36) translate(0 -18)"/>
+            <ellipse rx="11" ry="28" transform="rotate(108) translate(0 -18)"/>
+            <ellipse rx="11" ry="28" transform="rotate(180) translate(0 -18)"/>
+            <ellipse rx="11" ry="28" transform="rotate(252) translate(0 -18)"/>
+            <ellipse rx="11" ry="28" transform="rotate(324) translate(0 -18)"/>
+          </g>
+          <circle r="8" fill="#9BC77F"/>
+        </g>
+        <g class="decor" transform="translate(95 930) rotate(20)">
+          <path d="M0,0 v44 a9,9 0 0 0 18,0 v-38 a6,6 0 0 0 -12,0 v32" fill="none" stroke="#A7ADB3" stroke-width="3.5" stroke-linecap="round"/>
+        </g>
+
+        <!-- ---------- The Journey: map ---------- -->
+        <g transform="translate(800 470) rotate(-3)">
+          <g class="obj" data-open="journey" tabindex="0" role="button" aria-label="The Journey: open the map timeline">
+            <g class="lift">
+              <g class="obj-body">
+                <rect x="-232" y="-162" width="464" height="324" fill="#F2E3C2" stroke="#D2BC8E" stroke-width="2"/>
+                <rect x="-232" y="-162" width="155" height="324" fill="#5A3A14" opacity=".045"/>
+                <rect x="78" y="-162" width="154" height="324" fill="#5A3A14" opacity=".045"/>
+                <line x1="-232" y1="0" x2="232" y2="0" stroke="#B89A66" stroke-opacity=".5"/>
+                <g stroke="#B89A66" stroke-opacity=".35" stroke-dasharray="3 5">
+                  <line x1="-232" y1="-80" x2="232" y2="-80"/><line x1="-232" y1="80" x2="232" y2="80"/>
+                  <line x1="-120" y1="-162" x2="-120" y2="162"/><line x1="0" y1="-162" x2="0" y2="162"/><line x1="120" y1="-162" x2="120" y2="162"/>
+                </g>
+                <path transform="translate(0 18)" fill="#E3CC9C" stroke="#7E5E33" stroke-width="1.6" stroke-linejoin="round"
+                  d="M-188,-94.6 L-176.9,-74.7 L-183.4,-41.5 L-186,-28.2 L-172.9,-6.6 L-161.1,19.9 L-138.2,37.4 L-122.5,35.7 L-98.3,47.3 L-79.9,43.2 L-68.8,43.2 L-55.7,61.4 L-45.9,66.4 L-35.4,59.8 L-22.9,78.9 L-9.2,92.1 L-7.9,76.4 L8.5,63.1 L14.4,60.6 L29.5,62.3 L41.9,66.4 L43.2,56.4 L52.4,54.8 L70.1,60.6 L78.6,58.1 L86.5,73 L87.8,83 L96.9,97.9 L104.1,93 L100.9,71.4 L95.6,52.3 L98.9,41.5 L111.4,28.2 L127.7,18.3 L133.6,11.6 L131,0 L136.2,-12.5 L144.1,-24.9 L144.8,-29.9 L157.9,-35.7 L170.3,-39 L165.7,-46.5 L166.4,-50.6 L177.5,-60.6 L190,-64.7 L184.7,-83.8 L175.5,-86.3 L160.5,-66.4 L138.2,-66.4 L125.7,-54.8 L110,-53.1 L111.4,-48.1 L85.2,-41.5 L88.4,-68.9 L75.3,-78.9 L52.4,-93 L41.9,-91.3 L5.2,-99.6 L-176.9,-99.6 Z"/>
+                <g transform="translate(0 18)">
+                  <path d="M29,-40 Q-6,8 -12,55 Q-11,47 -7,45 Q1,50 4,60" fill="none" stroke="#C8431C" stroke-width="2.6" stroke-dasharray="5 4" stroke-linecap="round"/>
+                  <circle cx="29" cy="-40" r="5.5" fill="#2E7D46" stroke="#F2E3C2" stroke-width="1.5"/>
+                  <circle cx="-12" cy="55" r="5.5" fill="#D9481F" stroke="#F2E3C2" stroke-width="1.5"/>
+                  <circle cx="-7" cy="45" r="5" fill="#0E7C72" stroke="#F2E3C2" stroke-width="1.5"/>
+                  <circle cx="4" cy="60" r="5.5" fill="#2860C4" stroke="#F2E3C2" stroke-width="1.5"/>
+                </g>
+                <text x="-210" y="-128" class="svg-serif" font-size="24" font-weight="800" fill="#3A2A1A" letter-spacing="3">THE JOURNEY</text>
+                <text x="-210" y="-108" class="svg-sans" font-size="11" font-weight="700" fill="#7E5E33" letter-spacing="2">IOWA · AUSTIN · WACO · HOUSTON</text>
+                <g transform="translate(184 118)">
+                  <circle r="27" fill="none" stroke="#7E5E33" stroke-width="1.5"/>
+                  <path d="M0,-24 L5,0 L0,24 L-5,0 Z" fill="#7E5E33"/>
+                  <path d="M-24,0 L0,5 L24,0 L0,-5 Z" fill="#B79868"/>
+                  <text y="-31" class="svg-serif" font-size="11" font-weight="700" fill="#7E5E33" text-anchor="middle">N</text>
+                </g>
+              </g>
+              <g class="tag primary" transform="translate(0 196)"><rect x="-105" y="-19" width="210" height="38" rx="19"/><text y="6">Start the journey &#8594;</text></g>
+            </g>
+          </g>
+        </g>
+
+        <!-- ---------- Experience: deal folders ---------- -->
+        <g transform="translate(320 335) rotate(5)">
+          <g class="obj" data-open="experience" tabindex="0" role="button" aria-label="Experience: open the deal files">
+            <g class="lift">
+              <g class="obj-body">
+                <g transform="translate(-16 -20) rotate(-6)">
+                  <rect x="40" y="-124" width="104" height="30" rx="6" fill="#C69C55"/>
+                  <rect x="-150" y="-104" width="300" height="210" rx="8" fill="#CCA25D"/>
+                  <text x="92" y="-104" class="svg-sans" font-size="11" font-weight="700" fill="#5E421A" text-anchor="middle" letter-spacing="1">HODGES</text>
+                </g>
+                <g transform="translate(-7 -9) rotate(-2.5)">
+                  <rect x="-45" y="-124" width="104" height="30" rx="6" fill="#D2AB67"/>
+                  <rect x="-150" y="-104" width="300" height="210" rx="8" fill="#D8B26C"/>
+                  <text x="7" y="-104" class="svg-sans" font-size="11" font-weight="700" fill="#5E421A" text-anchor="middle" letter-spacing="1">ALTUS</text>
+                </g>
+                <rect x="-150" y="-124" width="112" height="32" rx="6" fill="#E0BA74"/>
+                <rect x="-150" y="-104" width="300" height="210" rx="8" fill="#E6C47F" stroke="#C9A15C" stroke-width="1.5"/>
+                <text x="-94" y="-103" class="svg-sans" font-size="11" font-weight="700" fill="#5E421A" text-anchor="middle" letter-spacing="1">OAKDALE</text>
+                <rect x="-112" y="-62" width="224" height="60" rx="4" fill="#FBF6EA"/>
+                <text y="-30" class="svg-serif" font-size="26" font-weight="800" fill="#2A2622" text-anchor="middle" letter-spacing="2">DEAL FILES</text>
+                <text y="-12" class="svg-sans" font-size="11" font-weight="700" fill="#5E554B" text-anchor="middle" letter-spacing="2">2025 – 2027</text>
+                <g transform="translate(78 52) rotate(-14)" opacity=".8">
+                  <circle r="34" fill="none" stroke="#B8341B" stroke-width="3"/>
+                  <circle r="27" fill="none" stroke="#B8341B" stroke-width="1.2"/>
+                  <text y="-2" class="svg-sans" font-size="11" font-weight="700" fill="#B8341B" text-anchor="middle" letter-spacing="1">REVIEWED</text>
+                  <text y="12" class="svg-sans" font-size="9" font-weight="700" fill="#B8341B" text-anchor="middle">W.M.</text>
+                </g>
+                <path transform="translate(-128 -114)" d="M0,0 v44 a9,9 0 0 0 18,0 v-38 a6,6 0 0 0 -12,0 v32" fill="none" stroke="#A7ADB3" stroke-width="3.5" stroke-linecap="round"/>
+              </g>
+              <g class="tag" transform="translate(0 150)"><rect x="-66" y="-17" width="132" height="34" rx="17"/><text y="5">Experience</text></g>
+            </g>
+          </g>
+        </g>
+
+        <!-- ---------- Field Notes: notebook ---------- -->
+        <g transform="translate(1290 325) rotate(-7)">
+          <g class="obj" data-open="notes" tabindex="0" role="button" aria-label="Field Notes: open the notebook">
+            <g class="lift">
+              <g class="obj-body">
+                <rect x="-108" y="-146" width="228" height="296" rx="10" fill="#F1E8D4"/>
+                <rect x="-115" y="-150" width="230" height="300" rx="12" fill="#6B3F24"/>
+                <rect x="-115" y="-150" width="28" height="300" rx="12" fill="#57311B"/>
+                <rect x="76" y="-150" width="10" height="300" fill="#2A1A10"/>
+                <text x="-6" y="-58" class="svg-serif" font-size="23" font-weight="700" fill="#D2AE73" text-anchor="middle" letter-spacing="2">FIELD NOTES</text>
+                <line x1="-62" y1="-44" x2="50" y2="-44" stroke="#D2AE73" stroke-opacity=".6"/>
+                <text x="-6" y="-24" class="svg-serif" font-size="13" font-style="italic" fill="#D2AE73" text-anchor="middle">W. Murphy</text>
+                <path d="M40,148 l0,44 l9,-9 l9,9 l0,-44" fill="#C8431C"/>
+              </g>
+              <g class="tag" transform="translate(0 222)"><rect x="-66" y="-17" width="132" height="34" rx="17"/><text y="5">Field Notes</text></g>
+            </g>
+          </g>
+        </g>
+
+        <!-- ---------- Contact: envelope ---------- -->
+        <g transform="translate(1010 150) rotate(-5)">
+          <g class="obj" data-open="contact" tabindex="0" role="button" aria-label="Contact: open the letter">
+            <g class="lift">
+              <g class="obj-body">
+                <g transform="translate(-92 58) rotate(-13)">
+                  <rect x="-82" y="-46" width="164" height="92" rx="4" fill="#FFFDF8" stroke="#E0D6C4"/>
+                  <text x="-66" y="-12" class="svg-serif" font-size="16" font-weight="700" fill="#2A2622">Will Murphy</text>
+                  <text x="-66" y="6" class="svg-sans" font-size="9.5" fill="#5E554B" letter-spacing="1">FINANCE · BAYLOR</text>
+                  <rect x="-66" y="22" width="60" height="3" fill="#C8431C"/>
+                </g>
+                <rect x="-120" y="-75" width="240" height="150" rx="4" fill="#F3E9D8" stroke="#D8C9AE" stroke-width="1.5"/>
+                <path d="M-120,75 L-22,2 M120,75 L22,2" stroke="#D8C9AE" stroke-width="1.5" fill="none"/>
+                <path d="M-120,-75 L0,14 L120,-75" fill="#EFE3CE" stroke="#D8C9AE" stroke-width="1.5"/>
+                <rect x="72" y="-64" width="38" height="46" fill="#2860C4" stroke="#FBF6EA" stroke-width="3" stroke-dasharray="3 2"/>
+                <circle cx="0" cy="14" r="23" fill="#B8341B"/>
+                <circle cx="0" cy="14" r="16" fill="none" stroke="#8E2512" stroke-width="1.5"/>
+                <text y="21" class="svg-serif" font-size="19" font-weight="800" fill="#F3C9B8" text-anchor="middle">W</text>
+              </g>
+              <g class="tag" transform="translate(30 112)"><rect x="-50" y="-17" width="100" height="34" rx="17"/><text y="5">Contact</text></g>
+            </g>
+          </g>
+        </g>
+
+        <!-- ---------- Training: race bib + stopwatch ---------- -->
+        <g transform="translate(330 725) rotate(-6)">
+          <g class="obj" data-open="training" tabindex="0" role="button" aria-label="Training: open the race bib">
+            <g class="lift">
+              <g class="obj-body">
+                <rect x="-140" y="-95" width="280" height="190" rx="10" fill="#FFFDF8" stroke="#E2DACB"/>
+                <path d="M-140,-85 a10,10 0 0 1 10,-10 h260 a10,10 0 0 1 10,10 v36 h-280 Z" fill="#C8431C"/>
+                <text y="-64" class="svg-sans" font-size="15" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="3">RACE DAY · DALLAS</text>
+                <text y="38" class="svg-serif" font-size="88" font-weight="800" fill="#2A2622" text-anchor="middle">2027</text>
+                <text y="70" class="svg-sans" font-size="12" font-weight="700" fill="#5E554B" text-anchor="middle" letter-spacing="4">NOVEMBER</text>
+                <g fill="none" stroke="#A7ADB3" stroke-width="2.5"><circle cx="-124" cy="-36" r="5"/><circle cx="124" cy="-36" r="5"/><circle cx="-124" cy="80" r="5"/><circle cx="124" cy="80" r="5"/></g>
+                <g transform="translate(150 -84)">
+                  <rect x="-7" y="-50" width="14" height="12" rx="2" fill="#9AA0A6"/>
+                  <circle r="38" fill="#E4E4E4" stroke="#9AA0A6" stroke-width="3"/>
+                  <circle r="30" fill="#FFFFFF"/>
+                  <g stroke="#2A2622" stroke-width="2"><line y1="-30" y2="-24"/><line y1="30" y2="24"/><line x1="-30" x2="-24"/><line x1="30" x2="24"/></g>
+                  <line x1="0" y1="0" x2="12" y2="-20" stroke="#C8431C" stroke-width="2.5" stroke-linecap="round"/>
+                  <circle r="3" fill="#2A2622"/>
+                </g>
+              </g>
+              <g class="tag" transform="translate(0 132)"><rect x="-56" y="-17" width="112" height="34" rx="17"/><text y="5">Training</text></g>
+            </g>
+          </g>
+        </g>
+
+        <!-- ---------- Interests: tray ---------- -->
+        <g transform="translate(800 835)">
+          <g class="obj" data-open="interests" tabindex="0" role="button" aria-label="Interests: open the tray">
+            <g class="lift">
+              <g class="obj-body">
+                <rect x="-170" y="-74" width="340" height="148" rx="62" fill="#E7D8BD" stroke="#CDB58C" stroke-width="2"/>
+                <rect x="-154" y="-59" width="308" height="118" rx="50" fill="#EFE3CB"/>
+                <g transform="translate(-100 0)">
+                  <circle r="28" fill="url(#golf)" stroke="#E0E0E0"/>
+                  <g fill="#D3D3D3"><circle cx="-10" cy="-8" r="2.4"/><circle cx="0" cy="-12" r="2.4"/><circle cx="10" cy="-6" r="2.4"/><circle cx="-12" cy="4" r="2.4"/><circle cx="-2" cy="0" r="2.4"/><circle cx="9" cy="6" r="2.4"/><circle cx="-4" cy="12" r="2.4"/><circle cx="6" cy="16" r="2"/><circle cx="16" cy="-2" r="2"/></g>
+                </g>
+                <g transform="translate(8 -4) rotate(-12)">
+                  <rect x="-58" y="-17" width="9" height="34" rx="2" fill="#1D1D1D"/>
+                  <rect x="46" y="-18" width="9" height="36" rx="2" fill="#1D1D1D"/>
+                  <g fill="#111"><rect x="24" y="-21" width="17" height="9" rx="2"/><rect x="24" y="12" width="17" height="9" rx="2"/><rect x="-44" y="-23" width="19" height="10" rx="2"/><rect x="-44" y="13" width="19" height="10" rx="2"/></g>
+                  <path d="M-46,-7 L40,-4 L50,-2.5 L50,2.5 L40,4 L-46,7 Z" fill="#C8431C"/>
+                  <rect x="-34" y="-14" width="42" height="28" rx="9" fill="#C8431C"/>
+                  <ellipse cx="-8" cy="0" rx="9" ry="6" fill="#1D1D1D"/>
+                </g>
+                <g transform="translate(104 6) rotate(14)">
+                  <path d="M0,-22 C -22,-62 34,-74 44,-38" stroke="#2860C4" stroke-width="4" fill="none"/>
+                  <rect x="-33" y="-22" width="66" height="44" rx="5" fill="#2860C4"/>
+                  <rect x="-27" y="-16" width="22" height="28" rx="2" fill="#FBF6EA" opacity=".92"/>
+                  <text x="14" y="5" class="svg-sans" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">SKI</text>
+                </g>
+              </g>
+              <g class="tag" transform="translate(0 102)"><rect x="-56" y="-17" width="112" height="34" rx="17"/><text y="5">Interests</text></g>
+            </g>
+          </g>
+        </g>
+
+        <!-- ---------- Travel: passport ---------- -->
+        <g transform="translate(1185 770) rotate(10)">
+          <g class="obj" data-open="travel" tabindex="0" role="button" aria-label="Travel: open the passport">
+            <g class="lift">
+              <g class="obj-body">
+                <g transform="translate(40 -36) rotate(-24)">
+                  <rect x="-115" y="-46" width="230" height="92" rx="6" fill="#FBF6EA" stroke="#D9CBB0"/>
+                  <rect x="62" y="-46" width="53" height="92" rx="6" fill="#0E7C72"/>
+                  <text x="-100" y="-18" class="svg-sans" font-size="10" font-weight="700" fill="#5E554B" letter-spacing="2">BOARDING PASS</text>
+                  <text x="-100" y="12" class="svg-serif" font-size="22" font-weight="700" fill="#2A2622">Next stop</text>
+                  <g fill="#2A2622"><rect x="-100" y="24" width="2" height="12"/><rect x="-95" y="24" width="4" height="12"/><rect x="-88" y="24" width="1.5" height="12"/><rect x="-84" y="24" width="3" height="12"/><rect x="-78" y="24" width="2" height="12"/><rect x="-73" y="24" width="4" height="12"/><rect x="-66" y="24" width="2" height="12"/></g>
+                </g>
+                <rect x="-80" y="-110" width="160" height="220" rx="10" fill="#1F3A5C"/>
+                <rect x="-70" y="-100" width="140" height="200" rx="6" fill="none" stroke="#D4AF37" stroke-opacity=".45"/>
+                <g transform="translate(0 -12)" fill="none" stroke="#D4AF37" stroke-width="2">
+                  <circle r="30"/><ellipse rx="12" ry="30"/><line x1="-30" x2="30"/><path d="M-26,-15 Q0,-9 26,-15 M-26,15 Q0,9 26,15"/>
+                </g>
+                <text y="58" class="svg-serif" font-size="15" font-weight="700" fill="#D4AF37" text-anchor="middle" letter-spacing="4">PASSPORT</text>
+              </g>
+              <g class="tag" transform="translate(0 146)"><rect x="-48" y="-17" width="96" height="34" rx="17"/><text y="5">Travel</text></g>
+            </g>
+          </g>
+        </g>
+
+        <!-- ---------- Recognition: framed certificate ---------- -->
+        <g transform="translate(1440 695) rotate(4)">
+          <g class="obj" data-open="recognition" tabindex="0" role="button" aria-label="Recognition: open the certificate">
+            <g class="lift">
+              <g class="obj-body">
+                <rect x="-98" y="-124" width="196" height="248" rx="4" fill="#5B3A21"/>
+                <rect x="-90" y="-116" width="180" height="232" fill="#7A5232"/>
+                <rect x="-80" y="-106" width="160" height="212" fill="#FBF6EA"/>
+                <text y="-74" class="svg-serif" font-size="12" font-style="italic" fill="#5E554B" text-anchor="middle">with honors</text>
+                <text y="-48" class="svg-serif" font-size="20" font-weight="800" fill="#2A2622" text-anchor="middle">DEAN'S LIST</text>
+                <g fill="#D6CBB5"><rect x="-56" y="-28" width="112" height="3"/><rect x="-48" y="-18" width="96" height="3"/><rect x="-56" y="-8" width="112" height="3"/><rect x="-40" y="2" width="80" height="3"/></g>
+                <path d="M-14,72 l-8,30 l10,-6 l6,10 l6,-30 Z M14,72 l8,30 l-10,-6 l-6,10 l-6,-30 Z" fill="#C8431C"/>
+                <circle cy="62" r="22" fill="url(#gold)" stroke="#A88426" stroke-width="1.5"/>
+                <path transform="translate(0 62)" d="M0,-11 L3,-3.5 L11,-3.5 L4.5,1.5 L7,9.5 L0,4.5 L-7,9.5 L-4.5,1.5 L-11,-3.5 L-3,-3.5 Z" fill="#8F6E1C"/>
+              </g>
+              <g class="tag" transform="translate(0 156)"><rect x="-68" y="-17" width="136" height="34" rx="17"/><text y="5">Recognition</text></g>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header class="desk-title">
+    <h1>Will Murphy's <em>Journey</em></h1>
+    <p>Iowa &rarr; Austin &rarr; Waco &rarr; Houston</p>
   </header>
+  <a class="btn desk-resume" href="assets/Will-Murphy-Resume.pdf" download>Résumé</a>
+  <p class="hint" id="hint"><span class="hint-fine">Move, drag, or scroll to look around &middot; click anything</span><span class="hint-touch">Drag to look around &middot; tap anything</span></p>
+  <div class="fade" aria-hidden="true"></div>
 
-  <div id="map" aria-hidden="true"></div>
-  <div class="paper-overlay" aria-hidden="true"></div>
-  <nav id="rail" class="rail" aria-label="Timeline stops"></nav>
+  <!-- ===================== Panels (open when you click an object) ===================== -->
+  <div id="panel-shell" class="panel-shell" hidden>
+    <div class="panel-card" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+      <div class="panel-bar"><button class="panel-back" type="button">&larr; Back to the desk</button></div>
 
-  <main id="story">
-    <section class="step hero">
-      <h1>Will Murphy's<br><em>Journey</em></h1>
-      <p class="hero-sub">Iowa &rarr; Austin &rarr; Waco &rarr; Houston</p>
-      <a class="scroll-cue" href="#iowa">Scroll to begin<span></span></a>
-    </section>
-
-    <!-- Chapters and travel interludes are inserted here from js/data.js -->
-
-    <section class="step outro">
-      <article class="card" style="--c: var(--coral)">
-        <p class="card-years">The journey so far</p>
-        <h2>Thanks for following along.</h2>
-        <p>[One warm closing line: what you're looking for next, or how you'd like people to reach out.]</p>
-        <div class="btn-row">
-          <a class="btn" href="assets/Will-Murphy-Resume.pdf" download>Download résumé</a>
-          <a class="btn btn-ghost" href="https://www.linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="btn btn-ghost" href="https://YOUR-HANDLE.substack.com" target="_blank" rel="noopener">Substack</a>
+      <!-- Experience -->
+      <article class="panel" data-panel="experience" data-theme="folder" hidden>
+        <header class="panel-head">
+          <p class="eyebrow">Deal files</p>
+          <h2>Experience</h2>
+          <p>Private equity, real estate, a student fund, and an angel network, mostly in Austin and Waco.</p>
+        </header>
+        <div class="tabs" role="tablist">
+          <button role="tab" aria-selected="true" data-tab="oakdale">Oakdale</button>
+          <button role="tab" aria-selected="false" data-tab="altus">Altus</button>
+          <button role="tab" aria-selected="false" data-tab="hodges">Hodges Fund</button>
+          <button role="tab" aria-selected="false" data-tab="ban">Angel Network</button>
+          <button role="tab" aria-selected="false" data-tab="prophet">Prophet</button>
+          <button role="tab" aria-selected="false" data-tab="zions">Up next</button>
         </div>
-        <p class="more">Want more? See what I'm <a href="interests.html">interested in</a> and what I've <a href="accomplishments.html">accomplished</a>.</p>
+        <div class="panel-body">
+          <section class="job" data-tabpanel="oakdale">
+            <p class="job-meta">Aug 2026 – Spring 2027 · Waco, TX</p>
+            <h3>Private Equity Intern, Oakdale Capital</h3>
+            <ul>
+              <li>Due diligence on a pre-revenue growth-equity deal, modeling the key business drivers.</li>
+              <li>Joined banker calls and prepared diligence questions for founders on an active deal team.</li>
+              <li>Sat in on pipeline meetings with founders to source and evaluate new investments.</li>
+              <li>Working there full time in spring 2027.</li>
+            </ul>
+          </section>
+          <section class="job" data-tabpanel="altus" hidden>
+            <p class="job-meta">Summer 2026 · Austin, TX</p>
+            <h3>Acquisition Intern, Altus Equity Group</h3>
+            <ul>
+              <li>Underwrote 55+ deals averaging $25M: cash flows, cap rates, DSCR, and levered IRR.</li>
+              <li>Analyzed deal-room data across active acquisitions, including asset-level financials and market comps.</li>
+              <li>Worked with senior leadership on deal strategy and portfolio positioning.</li>
+              <li>Managed broker communications across the active pipeline.</li>
+            </ul>
+          </section>
+          <section class="job" data-tabpanel="hodges" hidden>
+            <p class="job-meta">Spring 2026 · Waco, TX</p>
+            <h3>Equity Research, Hodges Fund (Small-Cap Practicum)</h3>
+            <ul>
+              <li>One of 15 selected for the Industrials, Materials &amp; Energy house; covered Industrials on a three-analyst team.</li>
+              <li>Fundamental equity research within a $1.8M student-managed portfolio.</li>
+              <li>Pitched an investment thesis to the faculty advisor and peer analysts; it was added as a position of more than $75,000.</li>
+            </ul>
+          </section>
+          <section class="job" data-tabpanel="ban" hidden>
+            <p class="job-meta">Oct 2025 – Mar 2026 · Waco, TX</p>
+            <h3>Junior Analyst, Baylor Angel Network</h3>
+            <ul>
+              <li>Due diligence on two startups (markets, financials, and risks) for the investment committee.</li>
+              <li>Worked with a senior analyst and angel mentors to evaluate business models and refine recommendations.</li>
+              <li>Met founders and angel investors at Presentation Day.</li>
+            </ul>
+          </section>
+          <section class="job" data-tabpanel="prophet" hidden>
+            <p class="job-meta">Summer 2025 · Austin, TX</p>
+            <h3>Summer Financial/AI Analyst, Prophet Capital Asset Management</h3>
+            <ul>
+              <li>Set up Microsoft Copilot to cross-check pitch book analytics against Limited Partnership Agreements, cutting manual review time by more than 50%.</li>
+              <li>Led the firm's first company-wide Copilot demo, showing AI workflows for legal documents and financials.</li>
+            </ul>
+          </section>
+          <section class="job" data-tabpanel="zions" hidden>
+            <p class="job-meta">2027 · Houston, TX</p>
+            <h3>Syndication &amp; Leverage Finance Analyst, Zions Capital Markets</h3>
+            <p>[What you'll be doing and why you chose it.]</p>
+          </section>
+          <p class="panel-more"><a href="accomplishments.html">Projects, writing, and awards &rarr;</a></p>
+        </div>
       </article>
-    </section>
-  </main>
 
-  <div id="drawer-backdrop" class="drawer-backdrop"></div>
-  <aside id="drawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
-    <button class="drawer-close" type="button">Close &times;</button>
-    <div id="drawer-body"></div>
-  </aside>
+      <!-- Field Notes -->
+      <article class="panel" data-panel="notes" data-theme="notebook" hidden>
+        <header class="panel-head">
+          <p class="eyebrow">Field notes</p>
+          <h2>Things I've learned</h2>
+          <p>Short lessons from deals, internships, and the people I've worked with.</p>
+        </header>
+        <div class="panel-body lined">
+          <div class="note"><span class="note-date">[Date]</span><p>[A lesson in your own words, one or two sentences.]</p></div>
+          <div class="note"><span class="note-date">[Date]</span><p>[A lesson in your own words, one or two sentences.]</p></div>
+          <div class="note"><span class="note-date">[Date]</span><p>[A lesson in your own words, one or two sentences.]</p></div>
+        </div>
+      </article>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="js/data.js"></script>
-  <script src="js/journey.js"></script>
+      <!-- Contact -->
+      <article class="panel" data-panel="contact" data-theme="letter" hidden>
+        <header class="panel-head">
+          <p class="eyebrow">A note from Will</p>
+          <h2>Thanks for stopping by.</h2>
+        </header>
+        <div class="panel-body">
+          <p>[One warm line: what you're working on next, and how you'd like people to reach out.]</p>
+          <div class="btn-row">
+            <a class="btn" href="assets/Will-Murphy-Resume.pdf" download>Download résumé</a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn btn-ghost" href="https://YOUR-HANDLE.substack.com" target="_blank" rel="noopener">Substack</a>
+          </div>
+          <p class="signoff">&mdash; Will</p>
+        </div>
+      </article>
+
+      <!-- Training -->
+      <article class="panel" data-panel="training" data-theme="bib" hidden>
+        <header class="panel-head">
+          <p class="eyebrow">Training</p>
+          <h2>Hybrid athlete</h2>
+          <p>Running and strength in the same week, starting early in the morning.</p>
+        </header>
+        <div class="panel-body">
+          <div class="race">
+            <div><span class="race-label">Goal race</span><strong>Hyrox Dallas</strong><span>November 2027</span></div>
+            <div class="countdown"><strong id="race-days">—</strong><span>days until race month</span></div>
+          </div>
+          <h3>How I train</h3>
+          <p>Hyrox mixes running with functional strength stations (sleds, carries, wall balls), so the training has to build both endurance and strength.</p>
+          <h3>How I fuel</h3>
+          <p>180g+ of protein a day, mostly whole foods, and carbs that flex with the session: more on long-run and double days, less on strength days.</p>
+          <p class="placeholder">[Optional: races you've run or are planning.]</p>
+        </div>
+      </article>
+
+      <!-- Interests -->
+      <article class="panel" data-panel="interests" data-theme="tray" hidden>
+        <header class="panel-head">
+          <p class="eyebrow">Off the clock</p>
+          <h2>What I'm into</h2>
+        </header>
+        <div class="panel-body">
+          <ul class="chips">
+            <li style="--c: var(--green)"><strong>Golf</strong><span>[Why you love it.]</span></li>
+            <li style="--c: var(--coral)"><strong>Formula 1</strong><span>[Favorite team or driver.]</span></li>
+            <li style="--c: var(--blue)"><strong>Snow skiing</strong><span>[Favorite mountain.]</span></li>
+            <li style="--c: var(--teal)"><strong>College football</strong><span>[A favorite Baylor game.]</span></li>
+            <li style="--c: var(--coral)"><strong>Martial arts</strong><span>[What you train and where.]</span></li>
+            <li style="--c: var(--green)"><strong>Nutrition</strong><span>Whole foods, high protein, fuel for training.</span></li>
+          </ul>
+          <p class="panel-more"><a href="interests.html">See the full page &rarr;</a></p>
+        </div>
+      </article>
+
+      <!-- Travel -->
+      <article class="panel" data-panel="travel" data-theme="passport" hidden>
+        <header class="panel-head">
+          <p class="eyebrow">Passport</p>
+          <h2>Places that changed me</h2>
+          <p>[A sentence on why travel matters to you.]</p>
+        </header>
+        <div class="panel-body">
+          <div class="stamps">
+            <div class="stamp" style="--c: var(--green); --r: -4deg"><span>Moved</span><b>Iowa &rarr; Texas</b><span>Summer 2015</span></div>
+            <div class="stamp" style="--c: var(--teal); --r: 3deg"><span>Study abroad</span><b>[Country]</b><span>Winter [Year]</span></div>
+            <div class="stamp" style="--c: var(--blue); --r: -2deg"><span>Next stamp</span><b>[Your next trip]</b><span>[When]</span></div>
+          </div>
+          <p class="placeholder">[A short story from studying abroad: what you expected, what happened.]</p>
+        </div>
+      </article>
+
+      <!-- Recognition -->
+      <article class="panel" data-panel="recognition" data-theme="diploma" hidden>
+        <header class="panel-head">
+          <p class="eyebrow">Recognition</p>
+          <h2>Baylor University</h2>
+          <p>BBA in Finance, Hankamer School of Business &middot; 3.92 GPA</p>
+        </header>
+        <div class="panel-body">
+          <ul class="honors">
+            <li><strong>Dean's Academic Honors List</strong><span>Fall 2023, Spring 2024, Fall 2024, Spring 2025, Spring 2026</span></li>
+            <li><strong>Baylor Distinction Award</strong><span>Scholarship</span></li>
+            <li><strong>Achievement Baylor Scholarship</strong><span>Scholarship</span></li>
+            <li><strong>Microsoft Office Associate</strong><span>Excel, Word, and PowerPoint certification</span></li>
+          </ul>
+          <p class="panel-more"><a href="accomplishments.html">Projects and writing &rarr;</a></p>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <script src="js/desk.js"></script>
 </body>
 </html>
