@@ -235,18 +235,29 @@ if (renderer) {
   folders.add(sticker);
   register('projects', folders, new THREE.Vector3(-3.3, 0.95, 1.3));
 
-  /* ---------- 3. Interests: race bib, dumbbell, tray (golf ball, football), ski mountain ---------- */
+  /* ---------- 3. Interests: Hyrox patches, dumbbell, tray (golf ball, football), ski mountain ---------- */
   const training = at(-0.9, 0.55, -0.12);
-  const bibTex = tex(950, 650, (g, w, h) => {
-    g.fillStyle = '#FFFDF8'; g.fillRect(0, 0, w, h);
-    g.fillStyle = '#C8431C'; g.fillRect(0, 0, w, 150);
-    g.fillStyle = '#fff'; g.font = `700 58px ${SANS}`; g.textAlign = 'center'; g.fillText('HYROX · DALLAS', w / 2, 98);
-    g.fillStyle = '#2A2622'; g.font = `800 300px ${SERIF}`; g.fillText('2027', w / 2, 455);
-    g.fillStyle = '#5E554B'; g.font = `700 44px ${SANS}`; g.fillText('N O V E M B E R', w / 2, 560);
-    g.strokeStyle = '#A7ADB3'; g.lineWidth = 8;
-    [[50, 200], [w - 50, 200], [50, h - 50], [w - 50, h - 50]].forEach(([x, y]) => { g.beginPath(); g.arc(x, y, 18, 0, Math.PI * 2); g.stroke(); });
+  // Hyrox finisher patches (black rubber, white spaced lettering)
+  const spaced = (g, text, y, x0, x1) => {          // spread letters evenly from x0 to x1
+    const chars = [...text];
+    const widths = chars.map((c) => g.measureText(c).width);
+    const gap = (x1 - x0 - widths.reduce((a, b) => a + b, 0)) / Math.max(1, chars.length - 1);
+    let x = x0;
+    g.textAlign = 'left';
+    chars.forEach((c, i) => { g.fillText(c, x, y); x += widths[i] + gap; });
+  };
+  const patchTex = (city) => tex(1040, 680, (g, w, h) => {
+    g.fillStyle = '#181818'; g.fillRect(0, 0, w, h);
+    g.strokeStyle = '#2C2C2C'; g.lineWidth = 10; g.strokeRect(22, 22, w - 44, h - 44);
+    g.fillStyle = '#ECECEC';
+    g.font = `700 150px ${SANS}`; spaced(g, 'HYROX', 205, 80, w - 80);
+    g.font = `700 120px ${SANS}`; spaced(g, city, 375, 80, w - 80);
+    g.font = `700 54px ${SANS}`; spaced(g, 'FINISHER USA 2024/2025', 485, 80, w - 80);
+    g.font = `700 42px ${SANS}`; spaced(g, 'OPEN_DOUBLES_SEASON_2025/2026', 600, 80, w - 80);
   });
-  training.add(put(topBox(1.9, 0.02, 1.3, 0xfffdf8, bibTex), { position: new THREE.Vector3(0, 0.012, 0) }));
+  const rubber = 0x181818;
+  training.add(put(topBox(1.25, 0.05, 0.82, rubber, patchTex('HOUSTON')), { position: new THREE.Vector3(-0.42, 0.026, 0.12), rotation: new THREE.Euler(0, 0.12, 0) }));
+  training.add(put(topBox(1.25, 0.05, 0.82, rubber, patchTex('DALLAS')), { position: new THREE.Vector3(0.55, 0.026, -0.3), rotation: new THREE.Euler(0, -0.16, 0) }));
   // dumbbell lying on the desk
   const iron = std(0x2b2b2b, { metalness: 0.55, roughness: 0.45 });
   const steel = std(0xa7adb3, { metalness: 0.8, roughness: 0.3 });
