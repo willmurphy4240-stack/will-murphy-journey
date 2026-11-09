@@ -201,3 +201,16 @@ body.leaving .fade { opacity: 1; }
 .contact-list span { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--coral); align-self: center; }
 .contact-list a, .contact-list strong { font-family: var(--serif); font-size: 18px; font-weight: 600; word-break: break-word; }
 .contact-list a { text-decoration-color: var(--coral); text-underline-offset: 3px; }
+
+/* investment thesis tab */
+.thesis { margin: 12px 0 16px; padding: 14px 16px; border-left: 4px solid var(--coral); background: #FFFDF8; border-radius: 0 10px 10px 0; font-family: var(--serif); font-style: italic; font-size: 16.5px; line-height: 1.5; }
+.thesis-flow { list-style: none; counter-reset: step; margin: 0 0 6px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.thesis-flow li { counter-increment: step; font-size: 13px; font-weight: 700; background: #F3E6CC; border-radius: 999px; padding: 5px 11px 5px 6px; display: flex; align-items: center; gap: 6px; margin: 0 !important; }
+.thesis-flow li::before { content: counter(step); background: var(--coral); color: #fff; border-radius: 999px; width: 20px; height: 20px; display: inline-grid; place-items: center; font-size: 11px; }
+.valuation { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 16px 0 8px; }
+.valuation div { background: #FFFDF8; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; }
+.valuation div.base { border-color: var(--coral); }
+.valuation span { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.valuation strong { font-family: var(--serif); font-size: 24px; }
+.valuation em { font-size: 12.5px; font-style: normal; color: var(--coral); font-weight: 700; }
+.small-note { font-size: 13.5px; color: var(--ink-soft); }
