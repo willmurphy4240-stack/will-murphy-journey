@@ -140,6 +140,8 @@ if (renderer) {
   const island = new THREE.Group();
   scene.add(island);
   const clickable = {};   // id -> { group, anchor }
+  const tickers = [];      // per-frame animations (the skier)
+  let hovered = null;
   function register(id, group, anchor) {
     group.traverse((m) => { if (m.isMesh) m.userData.id = id; });
     group.userData.baseY = group.position.y;
@@ -233,24 +235,33 @@ if (renderer) {
   folders.add(sticker);
   register('projects', folders, new THREE.Vector3(-3.3, 0.95, 1.3));
 
-  /* ---------- 3. Interests: race bib, kettlebell, and a tray (golf, football, ski pass) ---------- */
+  /* ---------- 3. Interests: race bib, dumbbell, tray (golf ball, football), ski mountain ---------- */
   const training = at(-0.9, 0.55, -0.12);
   const bibTex = tex(950, 650, (g, w, h) => {
     g.fillStyle = '#FFFDF8'; g.fillRect(0, 0, w, h);
     g.fillStyle = '#C8431C'; g.fillRect(0, 0, w, 150);
-    g.fillStyle = '#fff'; g.font = `700 58px ${SANS}`; g.textAlign = 'center'; g.fillText('RACE DAY · DALLAS', w / 2, 98);
+    g.fillStyle = '#fff'; g.font = `700 58px ${SANS}`; g.textAlign = 'center'; g.fillText('HYROX · DALLAS', w / 2, 98);
     g.fillStyle = '#2A2622'; g.font = `800 300px ${SERIF}`; g.fillText('2027', w / 2, 455);
     g.fillStyle = '#5E554B'; g.font = `700 44px ${SANS}`; g.fillText('N O V E M B E R', w / 2, 560);
     g.strokeStyle = '#A7ADB3'; g.lineWidth = 8;
     [[50, 200], [w - 50, 200], [50, h - 50], [w - 50, h - 50]].forEach(([x, y]) => { g.beginPath(); g.arc(x, y, 18, 0, Math.PI * 2); g.stroke(); });
   });
   training.add(put(topBox(1.9, 0.02, 1.3, 0xfffdf8, bibTex), { position: new THREE.Vector3(0, 0.012, 0) }));
+  // dumbbell lying on the desk
   const iron = std(0x2b2b2b, { metalness: 0.55, roughness: 0.45 });
-  const bell = new THREE.Mesh(new THREE.SphereGeometry(0.42, 40, 28), iron);
-  bell.scale.y = 0.92; bell.position.set(0.2, 0.39, -1.3);
-  const handle = new THREE.Mesh(new THREE.TorusGeometry(0.27, 0.07, 14, 36, Math.PI), iron);
-  handle.position.set(0.2, 0.74, -1.3);
-  training.add(bell, handle);
+  const steel = std(0xa7adb3, { metalness: 0.8, roughness: 0.3 });
+  const dumbbell = new THREE.Group();
+  dumbbell.position.set(0.9, 0.26, -1.25);
+  dumbbell.rotation.y = 0.15;
+  const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.055, 1.05, 20), steel);
+  bar.rotation.z = Math.PI / 2;
+  dumbbell.add(bar);
+  [-0.38, 0.38].forEach((x) => {
+    const plate = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.26, 0.2, 8), iron);   // hex plates
+    plate.rotation.z = Math.PI / 2; plate.position.x = x;
+    dumbbell.add(plate);
+  });
+  training.add(dumbbell);
 
   const tray = at(1.4, -0.4, 0);
   tray.add(put(new THREE.Mesh(new THREE.CylinderGeometry(1.08, 0.96, 0.13, 56), std(0xe7d8bd, { roughness: 0.45 })), { position: new THREE.Vector3(0, 0.065, 0) }));
@@ -261,15 +272,82 @@ if (renderer) {
   const laces = box(0.22, 0.02, 0.04, std(0xffffff));
   laces.position.set(0, 0.3, 0); ball.add(laces);
   tray.add(ball);
-  const skiTex = tex(330, 230, (g, w, h) => {
-    g.fillStyle = '#2860C4'; g.fillRect(0, 0, w, h);
-    g.fillStyle = '#FBF6EA'; g.fillRect(24, 28, 100, 140);
-    g.fillStyle = '#fff'; g.font = `700 64px ${SANS}`; g.textAlign = 'center'; g.fillText('SKI', 225, 125);
+  // little ski mountain with a skier carving down it
+  const MH = 2.2, MR = 1.2;
+  const mountain = at(-1.3, -1.8, 0.3);
+  const rock = new THREE.Mesh(new THREE.ConeGeometry(MR, MH, 9, 4), std(0x7a6c60, { flatShading: true, roughness: 0.9 }));
+  rock.position.y = MH / 2;
+  const capH = 0.95;
+  const snow = new THREE.Mesh(new THREE.ConeGeometry(MR * capH / MH + 0.02, capH, 9, 2), std(0xfbf6ea, { flatShading: true, roughness: 0.7 }));
+  snow.position.y = MH - capH / 2 + 0.01;
+  const skirt = new THREE.Mesh(new THREE.CylinderGeometry(MR * 0.98, MR * 1.02, 0.04, 9), std(0xeee6d6, { flatShading: true }));
+  skirt.position.y = 0.02;
+  mountain.add(rock, snow, skirt);
+  const pineMat = std(0x3f6b3a, { flatShading: true, roughness: 0.8 });
+  [[0.95, 0.2], [0.85, 2.3], [1.0, 3.6], [0.9, 5.1]].forEach(([r, a]) => {
+    const pine = new THREE.Mesh(new THREE.ConeGeometry(0.13, 0.42, 6), pineMat);
+    pine.position.set(Math.cos(a) * r * 1.22, 0.21, Math.sin(a) * r * 1.22);
+    mountain.add(pine);
   });
-  tray.add(put(topBox(0.56, 0.02, 0.39, 0x2860c4, skiTex), { position: new THREE.Vector3(0.38, 0.15, 0.5), rotation: new THREE.Euler(0, -0.3, 0) }));
+  const skier = new THREE.Group();
+  const jacket = std(0xc8431c, { roughness: 0.6 });
+  const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.028, 0.06, 4, 10), jacket);
+  torso.position.y = 0.075; torso.rotation.x = 0.35;
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.026, 14, 10), std(0x2860c4, { roughness: 0.4 }));
+  head.position.set(0, 0.14, 0.02);
+  const skiMat = std(0x1d1d1d, { roughness: 0.4 });
+  [-0.022, 0.022].forEach((x) => { const ski = box(0.012, 0.006, 0.17, skiMat); ski.position.set(x, 0.004, 0.01); skier.add(ski); });
+  skier.add(torso, head);
+  skier.scale.setScalar(2.1);
+  mountain.add(skier);
+  // path: spirals down the slope with a slalom wiggle, then starts again at the top
+  const slope = (t) => {
+    const y = MH * 0.66 * (1 - t) + 0.08;
+    const r = MR * (1 - y / MH) + 0.02;
+    const th = 0.6 + t * Math.PI * 1.35 + 0.28 * Math.sin(t * Math.PI * 9);
+    return new THREE.Vector3(Math.cos(th) * r, y, Math.sin(th) * r);
+  };
+  let skiT = 0;
+  tickers.push((dt) => {
+    const speed = hovered === 'interests' ? 0.24 : 0.12;
+    skiT = (skiT + dt * speed) % 1;
+    const p = slope(skiT), q = slope(Math.min(1, skiT + 0.01));
+    skier.position.copy(p);
+    skier.lookAt(mountain.localToWorld(q.clone()));
+  });
+
   const interests = at(3.0, 1.9, -0.35);
-  interests.add(training, tray);
+  interests.add(training, tray, mountain);
   register('interests', interests, new THREE.Vector3(3.1, 1.35, 1.7));
+
+  /* ---------- 4. Envelope + business card (Contact) ---------- */
+  const envelope = at(0.1, 3.85, 0.15);
+  const cardTex = tex(600, 360, (g) => {
+    g.fillStyle = '#FFFDF8'; g.fillRect(0, 0, 600, 360);
+    g.fillStyle = '#2A2622'; g.font = `700 64px ${SERIF}`; g.fillText('Will Murphy', 50, 150);
+    g.fillStyle = '#5E554B'; g.font = `700 30px ${SANS}`; g.fillText('FINANCE · BAYLOR', 52, 205);
+    g.fillStyle = '#C8431C'; g.fillRect(52, 240, 180, 10);
+  });
+  envelope.add(put(topBox(1.0, 0.02, 0.6, 0xfffdf8, cardTex), { position: new THREE.Vector3(-0.95, 0.012, 0.55), rotation: new THREE.Euler(0, 0.35, 0) }));
+  const envTex = tex(1050, 676, (g, w, h) => {
+    g.fillStyle = '#F3E9D8'; g.fillRect(0, 0, w, h);
+    g.strokeStyle = '#D2C2A4'; g.lineWidth = 6;
+    g.beginPath(); g.moveTo(0, 0); g.lineTo(w / 2, h * 0.58); g.lineTo(w, 0); g.stroke();
+    g.beginPath(); g.moveTo(0, h); g.lineTo(w * 0.4, h * 0.5); g.moveTo(w, h); g.lineTo(w * 0.6, h * 0.5); g.stroke();
+    g.fillStyle = '#2860C4'; g.fillRect(w - 170, 40, 120, 150);
+    g.strokeStyle = '#FBF6EA'; g.setLineDash([10, 8]); g.lineWidth = 6; g.strokeRect(w - 160, 50, 100, 130);
+  });
+  envelope.add(put(topBox(2.1, 0.04, 1.35, 0xf3e9d8, envTex), { position: new THREE.Vector3(0, 0.035, 0) }));
+  const sealTex = tex(256, 256, (g) => {
+    g.fillStyle = '#B8341B'; g.fillRect(0, 0, 256, 256);
+    g.strokeStyle = '#8E2512'; g.lineWidth = 12; g.beginPath(); g.arc(128, 128, 88, 0, Math.PI * 2); g.stroke();
+    g.fillStyle = '#F3C9B8'; g.font = `800 120px ${SERIF}`; g.textAlign = 'center'; g.fillText('W', 128, 170);
+  });
+  const sealMat = std(0xb8341b, { roughness: 0.45 });
+  const seal = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.25, 0.07, 40), [sealMat, std(0xffffff, { map: sealTex, roughness: 0.45 }), sealMat]);
+  seal.position.set(0, 0.09, 0.09);
+  envelope.add(seal);
+  register('contact', envelope, new THREE.Vector3(0.1, 0.85, 3.85));
 
   /* ---------- decor ---------- */
   // desk lamp with a warm spotlight
@@ -318,7 +396,7 @@ if (renderer) {
   island.add(plant);
 
   // pen
-  const pen = at(-0.4, 3.3, 0.5);
+  const pen = at(-2.4, 3.6, 0.5);
   const penBody = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.3, 16), std(0x1f2a36, { roughness: 0.3, metalness: 0.3 }));
   penBody.rotation.z = Math.PI / 2; penBody.position.y = 0.05;
   const tip = new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.16, 16), brass);
@@ -337,7 +415,7 @@ if (renderer) {
   const ray = new THREE.Raycaster();
   const ndc = new THREE.Vector2();
   const hits = Object.values(clickable).flatMap((c) => { const a = []; c.group.traverse((m) => m.isMesh && a.push(m)); return a; });
-  let hovered = null, down = null;
+  let down = null;
   function pick(e) {
     const r = canvas.getBoundingClientRect();
     ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
@@ -443,7 +521,7 @@ if (renderer) {
   let last = performance.now();
   function frame(now) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
-    if (!reduce) deskGlobe.group.rotation.y += dt * 0.25;
+    if (!reduce) { deskGlobe.group.rotation.y += dt * 0.25; tickers.forEach((f) => f(dt)); }
 
     for (const [id, c] of Object.entries(clickable)) {
       const want = (id === hovered && mode === 'explore') ? 0.14 : 0;
