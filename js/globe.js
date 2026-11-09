@@ -43,13 +43,17 @@ function lineSegments(lines, r, color, opacity = 1) {
 }
 
 function dotTexture() {
-  const c = document.createElement('canvas'); c.width = c.height = 32;
-  const g = c.getContext('2d'); g.fillStyle = '#fff'; g.beginPath(); g.arc(16, 16, 14, 0, Math.PI * 2); g.fill();
+  // soft-edged round dot so points don't shimmer or look jagged
+  const c = document.createElement('canvas'); c.width = c.height = 64;
+  const g = c.getContext('2d');
+  const r = g.createRadialGradient(32, 32, 0, 32, 32, 30);
+  r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(0.62, 'rgba(255,255,255,1)'); r.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = r; g.fillRect(0, 0, 64, 64);
   return new THREE.CanvasTexture(c);
 }
 
 export const GLOBE_COLORS = {
-  ocean: '#F2E3C2', dots: '#8A6534', coast: '#5A3E1E', grid: '#B89A66', states: '#A88A5A', visited: '#C8431C', glow: '#F5C27A'
+  ocean: '#F2E3C2', land: '#E2CA9A', dots: '#7E5A2C', coast: '#5A3E1E', grid: '#B89A66', states: '#A88A5A', visited: '#C8431C', glow: '#F5C27A'
 };
 
 /**
@@ -64,10 +68,18 @@ export async function buildGlobe(o = {}) {
   const land = feature(world, world.objects.land);
   const group = new THREE.Group();
 
-  // ocean / paper sphere
+  // ocean / paper sphere with a soft tan land fill under the dots
+  const fill = document.createElement('canvas'); fill.width = 4096; fill.height = 2048;
+  const fctx = fill.getContext('2d');
+  fctx.fillStyle = C.ocean; fctx.fillRect(0, 0, fill.width, fill.height);
+  const fproj = geoEquirectangular().scale(fill.width / (2 * Math.PI)).translate([fill.width / 2, fill.height / 2]).precision(0.1);
+  fctx.beginPath(); geoPath(fproj, fctx)(land); fctx.fillStyle = C.land; fctx.fill();
+  const fillTex = new THREE.CanvasTexture(fill);
+  fillTex.colorSpace = THREE.SRGBColorSpace;
+  fillTex.anisotropy = 8;
   const sphere = new THREE.Mesh(
-    new THREE.SphereGeometry(radius, 96, 64),
-    new THREE.MeshStandardMaterial({ color: C.ocean, roughness: 0.95, metalness: 0 })
+    new THREE.SphereGeometry(radius, 128, 96),
+    new THREE.MeshStandardMaterial({ map: fillTex, roughness: 0.95, metalness: 0 })
   );
   sphere.name = 'globe-sphere';
   group.add(sphere);
@@ -113,7 +125,7 @@ export async function buildGlobe(o = {}) {
   const dg = new THREE.BufferGeometry();
   dg.setAttribute('position', new THREE.Float32BufferAttribute(dots, 3));
   const dotMat = new THREE.PointsMaterial({
-    color: C.dots, size: 2, sizeAttenuation: false, map: dotTexture(), alphaTest: 0.5, transparent: false
+    color: C.dots, size: 2, sizeAttenuation: false, map: dotTexture(), transparent: true, depthWrite: false
   });
   group.add(new THREE.Points(dg, dotMat));
 

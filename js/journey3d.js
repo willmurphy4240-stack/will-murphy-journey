@@ -68,7 +68,7 @@ scene.add(new THREE.AmbientLight(0xfff3e0, 1.6));
 const sun = new THREE.DirectionalLight(0xffe2b8, 1.5);
 scene.add(sun);
 
-const globe = await buildGlobe({ radius: 1, dotStep: 0.42 });
+const globe = await buildGlobe({ radius: 1, dotStep: 0.7 });
 scene.add(globe.group);
 document.body.classList.add('globe-ready');
 
@@ -172,7 +172,7 @@ function frame(now) {
   camera.setViewOffset(w, h, cam.offX * w, cam.offY * h, w, h);
   sun.position.copy(camera.position).add(tmp.set(-2, 2, 0)).normalize().multiplyScalar(5);
 
-  globe.setDotSize(renderer.getPixelRatio() * Math.min(5, Math.max(1.15, 1.3 / Math.sqrt(cam.alt))));
+  globe.setDotSize(renderer.getPixelRatio() * Math.min(5, Math.max(1.6, 1.5 / Math.sqrt(cam.alt))));
 
   // pin size stays readable at any zoom
   const pinScale = Math.max(0.0006, cam.alt * 0.0065);
