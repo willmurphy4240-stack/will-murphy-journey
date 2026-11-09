@@ -16,8 +16,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="css/styles.css">
+  <script type="importmap">
+  { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+      "d3-geo": "https://cdn.jsdelivr.net/npm/d3-geo@3.1.1/+esm",
+      "topojson-client": "https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm"
+  } }
+  </script>
 </head>
 <body class="journey">
   <header class="site-nav">
@@ -30,8 +37,10 @@
     </ul>
   </header>
 
-  <div id="map" aria-hidden="true"></div>
-  <div class="paper-overlay" aria-hidden="true"></div>
+  <canvas id="globe" aria-hidden="true"></canvas>
+  <div id="globe-labels" class="globe-labels" aria-hidden="true"></div>
+  <div class="globe-vignette" aria-hidden="true"></div>
+  <p class="globe-loading">Spinning up the globe&hellip;</p>
   <nav id="rail" class="rail" aria-label="Timeline stops"></nav>
 
   <main id="story">
@@ -64,8 +73,7 @@
     <div id="drawer-body"></div>
   </aside>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="js/data.js"></script>
-  <script src="js/journey.js"></script>
+  <script type="module" src="js/journey3d.js"></script>
 </body>
 </html>

@@ -2,57 +2,53 @@
    The desk (index.html)
    ========================================================================== */
 html, body.desk { height: 100%; }
-body.desk { overflow: hidden; background: #6E4826; overscroll-behavior: none; }
+body.desk {
+  overflow: hidden; overscroll-behavior: none;
+  background: radial-gradient(ellipse at 50% 42%, #6A4528 0%, #3E2716 42%, #1B100A 100%) fixed;
+}
 
-.stage {
-  position: fixed; inset: 0; overflow: hidden;
-  touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none;
-}
-.stage.dragging { cursor: grabbing; }
-.stage.focused { cursor: zoom-out; }
-.world {
-  position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform;
-  background: #B9874F url("../assets/wood.svg") center / 100% 100% no-repeat;
-}
-/* extra desk surface around the scene so zooming near an edge never shows a gap */
-.world::before {
-  content: ""; position: absolute; z-index: -1;
-  left: calc(-1 * var(--ww)); top: calc(-1 * var(--wh));
-  width: calc(3 * var(--ww)); height: calc(3 * var(--wh));
-  background: url("../assets/wood.svg") 0 0 / var(--ww) var(--wh) repeat;
-}
-.world { isolation: isolate; }
-.world svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.svg-serif { font-family: var(--serif); }
-.svg-sans { font-family: var(--sans); }
+.stage { position: fixed; inset: 0; overflow: hidden; user-select: none; -webkit-user-select: none; }
+#scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; outline: none; }
+#scene:active { cursor: grabbing; }
+body.focused #scene { cursor: zoom-out; }
 
 .vignette {
   position: fixed; inset: 0; z-index: 5; pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 48%, rgba(38, 18, 4, .5) 100%);
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(15, 8, 3, .5) 100%);
 }
 
-/* Objects: lift on hover, like picking something up */
-.decor { filter: drop-shadow(0 4px 4px rgba(40, 22, 8, .35)); }
-.obj { cursor: pointer; outline: none; }
-.obj .lift {
-  transform-box: fill-box; transform-origin: center;
-  transition: transform .35s cubic-bezier(.2, .8, .2, 1), filter .35s;
-  filter: drop-shadow(0 4px 4px rgba(40, 22, 8, .38)) drop-shadow(0 10px 14px rgba(40, 22, 8, .16));
+/* Floating labels that follow each object */
+.tags { position: absolute; inset: 0; pointer-events: none; z-index: 6; }
+.tag3d {
+  position: absolute; left: 0; top: 0; pointer-events: auto; cursor: pointer;
+  font: 700 14.5px var(--sans); letter-spacing: .02em; color: var(--ink);
+  background: rgba(251, 246, 234, .95); border: 1.5px solid rgba(42, 38, 34, .15); border-radius: 999px;
+  padding: 7px 15px; white-space: nowrap; box-shadow: 0 8px 18px -10px rgba(0, 0, 0, .7);
+  opacity: 0; transition: opacity .3s, border-color .2s, background .2s;
 }
-.stage:not(.focused):not(.dragging) .obj:hover .lift,
-.stage:not(.focused) .obj:focus-visible .lift {
-  transform: translateY(-9px) scale(1.035);
-  filter: drop-shadow(0 18px 16px rgba(40, 22, 8, .4)) drop-shadow(0 30px 30px rgba(40, 22, 8, .16));
+.tag3d.show { opacity: 1; }
+.tag3d:hover, .tag3d.hot, .tag3d:focus-visible { border-color: var(--coral); outline: none; }
+.tag3d.primary { background: var(--coral); color: #fff; border-color: transparent; font-size: 15.5px; padding: 9px 18px; }
+.tag3d.primary:hover, .tag3d.primary.hot, .tag3d.primary:focus-visible { background: #A8361A; }
+body.focused .tag3d, body.leaving .tag3d { opacity: 0; pointer-events: none; }
+@media (max-width: 760px) {
+  .tag3d { font-size: 12px; padding: 5px 10px; }
+  .tag3d.primary { font-size: 13px; padding: 7px 13px; }
 }
-.tag rect { fill: #FBF6EA; stroke: rgba(42, 38, 34, .18); stroke-width: 1.5; transition: fill .25s, stroke .25s; }
-.tag text { font: 700 15px var(--sans); fill: var(--ink); text-anchor: middle; letter-spacing: .02em; }
-.tag.primary rect { fill: #C8431C; stroke: none; }
-.tag.primary text { fill: #fff; font-size: 16px; }
-.obj:hover .tag:not(.primary) rect, .obj:focus-visible .tag:not(.primary) rect { stroke: #C8431C; stroke-width: 2.5; }
-.obj:focus-visible .tag.primary rect { stroke: #2A2622; stroke-width: 3; }
-.tag.primary { animation: nudge 2.6s ease-in-out 1.5s infinite; transform-box: fill-box; transform-origin: center; }
-@keyframes nudge { 0%, 70%, 100% { transform: none; } 80% { transform: translateY(-4px); } 90% { transform: translateY(0); } }
 
+.scene-loading {
+  position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0; z-index: 4;
+  color: #E9D9BC; font-size: 13px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+}
+body.scene-ready .scene-loading { display: none; }
+
+/* If 3D can't start, the labels become a simple menu */
+body.no-webgl .scene-loading { display: none; }
+body.no-webgl .tags {
+  position: fixed; inset: auto 0 auto 0; top: 50%; transform: translateY(-50%);
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 0 16px;
+}
+body.no-webgl .tag3d { position: static; opacity: 1; transform: none !important; }
 /* Fixed chrome on top of the desk */
 .desk-title {
   position: fixed; top: calc(18px + env(safe-area-inset-top)); left: calc(18px + env(safe-area-inset-left)); z-index: 10; pointer-events: none;
@@ -79,7 +75,7 @@ body.desk { overflow: hidden; background: #6E4826; overscroll-behavior: none; }
 body.hint-off .hint, body.focused .hint { opacity: 0; }
 body.focused .desk-title, body.focused .desk-resume { opacity: 0; pointer-events: none; }
 
-.fade { position: fixed; inset: 0; z-index: 50; background: var(--paper); opacity: 0; pointer-events: none; transition: opacity .45s ease .5s; }
+.fade { position: fixed; inset: 0; z-index: 50; background: #24160D; opacity: 0; pointer-events: none; transition: opacity .5s ease .55s; }
 body.leaving .fade { opacity: 1; }
 
 /* ---------- Panels ---------- */

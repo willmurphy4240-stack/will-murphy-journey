@@ -40,7 +40,7 @@ img { max-width: 100%; display: block; }
   padding: calc(14px + env(safe-area-inset-top)) clamp(16px, 4vw, 40px) 14px;
   background: linear-gradient(var(--paper) 30%, rgba(247, 240, 227, 0));
 }
-.brand { font-family: var(--serif); font-weight: 700; font-size: 18px; text-decoration: none; }
+.brand { font-family: var(--serif); font-weight: 700; font-size: 18px; text-decoration: none; white-space: nowrap; }
 .nav-links { display: flex; align-items: center; gap: 22px; list-style: none; margin: 0; padding: 0; }
 .nav-links a {
   text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .02em;
@@ -256,6 +256,47 @@ body.drawer-open .drawer-backdrop { opacity: 1; pointer-events: auto; }
 .site-footer nav { display: flex; gap: 18px; }
 
 /* ---------- Mobile ---------- */
+/* ==========================================================================
+   Journey page: 3D globe on a warm, dark "night desk" background
+   ========================================================================== */
+body.journey {
+  background: radial-gradient(ellipse at 60% 45%, #5C3B22 0%, #3A2414 45%, #1B100A 100%) fixed;
+  color: var(--paper);
+}
+#globe { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; display: block; }
+.globe-vignette {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(15, 8, 3, .55) 100%);
+}
+.globe-labels { position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+.globe-label {
+  position: absolute; left: 0; top: 0; white-space: nowrap; opacity: 0; transition: opacity .3s;
+  margin: -13px 0 0 16px; padding: 3px 10px 3px 4px; border-radius: 999px;
+  background: rgba(251, 246, 234, .94); color: var(--ink); font: 600 14px var(--serif);
+  box-shadow: 0 6px 14px -8px rgba(0, 0, 0, .6); display: flex; align-items: center; gap: 7px;
+}
+.globe-label b { font: 700 10.5px var(--sans); color: #fff; background: var(--c); border-radius: 999px; padding: 3px 6px; }
+.globe-label.show { opacity: 1; }
+.globe-label.active { outline: 2px solid var(--c); }
+body.journey #story { z-index: 3; }
+body.journey .site-nav { background: linear-gradient(rgba(27, 16, 10, .92) 30%, rgba(27, 16, 10, 0)); }
+body.journey .site-nav, body.journey .brand { color: var(--paper); }
+body.journey .nav-links a.nav-resume { background: var(--paper); color: var(--ink); }
+body.journey .nav-links a.nav-resume:hover { background: var(--coral); color: #fff; }
+body.journey .hero h1 { color: var(--paper); text-shadow: 0 4px 30px rgba(0, 0, 0, .55); }
+body.journey .hero h1 em { color: #F07A4F; }
+body.journey .hero-sub { background: rgba(251, 246, 234, .12); color: #E9D9BC; }
+body.journey .scroll-cue { color: #E9D9BC; }
+body.journey .scroll-cue span { border-color: #E9D9BC; }
+body.journey .travel-text { color: var(--paper); text-shadow: 0 2px 18px rgba(0, 0, 0, .7); }
+body.journey .travel-route { background: rgba(27, 16, 10, .7); color: #F3E6CC; }
+body.journey .card, body.journey .rail-label, body.journey .drawer { color: var(--ink); }
+body.journey .rail .dot { background: #2A1A10; }
+body.journey .rail a.visited .dot { background: var(--c); }
+body.journey .hero { padding-top: 13vh; }
+body.journey .globe-loading { position: fixed; left: 50%; bottom: 14vh; transform: translateX(-50%); z-index: 2; color: #E9D9BC; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; }
+body.globe-ready .globe-loading { display: none; }
+
 .brand-short { display: none; }
 body.journey { animation: pagein .7s ease both; }
 @keyframes pagein { from { opacity: 0; } }

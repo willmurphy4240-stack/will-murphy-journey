@@ -7,8 +7,9 @@ A personal site: a scrolling vintage map that follows Iowa → Austin → Waco �
 | What | File |
 |---|---|
 | The desk (home page) and the panel text for each object | `index.html` (each panel is an `<article class="panel">`) |
-| Desk camera, drag, and zoom behavior | `js/desk.js`, `css/desk.css` |
-| Timeline text, dates, highlights, map pins | `js/data.js` (shown on `journey.html`) |
+| The 3D desk island: objects, lighting, camera flights | `js/desk3d.js`, `css/desk.css` |
+| The globe (dots, coastlines, colors) | `js/globe.js` (map outlines in `assets/data/`) |
+| Timeline text, dates, highlights, globe pins | `js/data.js` (shown on `journey.html`, run by `js/journey3d.js`) |
 | LinkedIn/Substack links | search all `.html` files for `linkedin.com` / `substack.com` |
 | App icon and home-screen settings | `assets/icons/`, `manifest.webmanifest` (regenerate icons with `tools/make_icons.py`) |
 | Interests | `interests.html` |
