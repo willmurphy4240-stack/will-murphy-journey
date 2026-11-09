@@ -33,13 +33,8 @@
     <canvas id="scene" aria-hidden="true"></canvas>
     <nav id="tags" class="tags" aria-label="Things on the desk">
       <button class="tag3d primary" data-open="journey">Start the journey &rarr;</button>
-      <button class="tag3d" data-open="experience">Experience</button>
-      <button class="tag3d" data-open="notes">Field Notes</button>
-      <button class="tag3d" data-open="contact">Contact</button>
-      <button class="tag3d" data-open="training">Training</button>
+      <button class="tag3d" data-open="projects">Projects</button>
       <button class="tag3d" data-open="interests">Interests</button>
-      <button class="tag3d" data-open="travel">Travel</button>
-      <button class="tag3d" data-open="recognition">Recognition</button>
     </nav>
     <p class="scene-loading">Setting up the desk&hellip;</p>
   </div>
@@ -58,125 +53,61 @@
     <div class="panel-card" role="dialog" aria-modal="true" aria-labelledby="panel-title">
       <div class="panel-bar"><button class="panel-back" type="button">&larr; Back to the desk</button></div>
 
-      <!-- Experience -->
-      <article class="panel" data-panel="experience" data-theme="folder" hidden>
+      <!-- Projects -->
+      <article class="panel" data-panel="projects" data-theme="folder" hidden>
         <header class="panel-head">
-          <p class="eyebrow">Deal files</p>
-          <h2>Experience</h2>
-          <p>Private equity, real estate, a student fund, and an angel network, mostly in Austin and Waco.</p>
+          <p class="eyebrow">Projects &amp; writing</p>
+          <h2>What I've built</h2>
+          <p>Stock pitches, deal work, an AI workflow, and the things I write about.</p>
         </header>
         <div class="tabs" role="tablist">
-          <button role="tab" aria-selected="true" data-tab="oakdale">Oakdale</button>
-          <button role="tab" aria-selected="false" data-tab="altus">Altus</button>
-          <button role="tab" aria-selected="false" data-tab="hodges">Hodges Fund</button>
-          <button role="tab" aria-selected="false" data-tab="ban">Angel Network</button>
-          <button role="tab" aria-selected="false" data-tab="prophet">Prophet</button>
-          <button role="tab" aria-selected="false" data-tab="zions">Up next</button>
+          <button role="tab" aria-selected="true" data-tab="hodges">Stock pitch</button>
+          <button role="tab" aria-selected="false" data-tab="altus">Underwriting</button>
+          <button role="tab" aria-selected="false" data-tab="copilot">AI workflow</button>
+          <button role="tab" aria-selected="false" data-tab="ban">Startup diligence</button>
+          <button role="tab" aria-selected="false" data-tab="writing">Writing</button>
         </div>
         <div class="panel-body">
-          <section class="job" data-tabpanel="oakdale">
-            <p class="job-meta">Aug 2026 – Spring 2027 · Waco, TX</p>
-            <h3>Private Equity Intern, Oakdale Capital</h3>
+          <section class="job" data-tabpanel="hodges">
+            <p class="job-meta">Spring 2026 · Hodges Fund, Baylor</p>
+            <h3>Industrials stock pitch</h3>
             <ul>
-              <li>Due diligence on a pre-revenue growth-equity deal, modeling the key business drivers.</li>
-              <li>Joined banker calls and prepared diligence questions for founders on an active deal team.</li>
-              <li>Sat in on pipeline meetings with founders to source and evaluate new investments.</li>
-              <li>Working there full time in spring 2027.</li>
+              <li>One of 15 students selected for the Industrials, Materials &amp; Energy house of Baylor's $1.8M student-managed fund.</li>
+              <li>Covered Industrials on a three-analyst team with fundamental equity research.</li>
+              <li>Pitched the thesis to the faculty advisor and peer analysts; it was added to the portfolio as a position of more than $75,000.</li>
             </ul>
           </section>
           <section class="job" data-tabpanel="altus" hidden>
-            <p class="job-meta">Summer 2026 · Austin, TX</p>
-            <h3>Acquisition Intern, Altus Equity Group</h3>
+            <p class="job-meta">Summer 2026 · Altus Equity Group, Austin</p>
+            <h3>55+ deals underwritten</h3>
             <ul>
-              <li>Underwrote 55+ deals averaging $25M: cash flows, cap rates, DSCR, and levered IRR.</li>
-              <li>Analyzed deal-room data across active acquisitions, including asset-level financials and market comps.</li>
-              <li>Worked with senior leadership on deal strategy and portfolio positioning.</li>
-              <li>Managed broker communications across the active pipeline.</li>
+              <li>Underwrote 55+ acquisitions averaging $25M: cash flows, cap rates, DSCR, and levered IRR.</li>
+              <li>Analyzed deal-room data, asset-level financials, and market comps across the active pipeline.</li>
             </ul>
           </section>
-          <section class="job" data-tabpanel="hodges" hidden>
-            <p class="job-meta">Spring 2026 · Waco, TX</p>
-            <h3>Equity Research, Hodges Fund (Small-Cap Practicum)</h3>
-            <ul>
-              <li>One of 15 selected for the Industrials, Materials &amp; Energy house; covered Industrials on a three-analyst team.</li>
-              <li>Fundamental equity research within a $1.8M student-managed portfolio.</li>
-              <li>Pitched an investment thesis to the faculty advisor and peer analysts; it was added as a position of more than $75,000.</li>
-            </ul>
-          </section>
-          <section class="job" data-tabpanel="ban" hidden>
-            <p class="job-meta">Oct 2025 – Mar 2026 · Waco, TX</p>
-            <h3>Junior Analyst, Baylor Angel Network</h3>
-            <ul>
-              <li>Due diligence on two startups (markets, financials, and risks) for the investment committee.</li>
-              <li>Worked with a senior analyst and angel mentors to evaluate business models and refine recommendations.</li>
-              <li>Met founders and angel investors at Presentation Day.</li>
-            </ul>
-          </section>
-          <section class="job" data-tabpanel="prophet" hidden>
-            <p class="job-meta">Summer 2025 · Austin, TX</p>
-            <h3>Summer Financial/AI Analyst, Prophet Capital Asset Management</h3>
+          <section class="job" data-tabpanel="copilot" hidden>
+            <p class="job-meta">Summer 2025 · Prophet Capital, Austin</p>
+            <h3>Copilot for LPA review</h3>
             <ul>
               <li>Set up Microsoft Copilot to cross-check pitch book analytics against Limited Partnership Agreements, cutting manual review time by more than 50%.</li>
               <li>Led the firm's first company-wide Copilot demo, showing AI workflows for legal documents and financials.</li>
             </ul>
           </section>
-          <section class="job" data-tabpanel="zions" hidden>
-            <p class="job-meta">2027 · Houston, TX</p>
-            <h3>Syndication &amp; Leverage Finance Analyst, Zions Capital Markets</h3>
-            <p>Joining the Syndication &amp; Leverage Finance team at Zions Capital Markets in Houston as an analyst.</p>
+          <section class="job" data-tabpanel="ban" hidden>
+            <p class="job-meta">2025 – 2026 · Baylor Angel Network</p>
+            <h3>Startup due diligence</h3>
+            <ul>
+              <li>Evaluated two startups' markets, financials, and risks for the investment committee.</li>
+              <li>Worked with a senior analyst and angel mentors to refine recommendations, then met founders at Presentation Day.</li>
+            </ul>
           </section>
-          <p class="panel-more"><a href="accomplishments.html">Projects, writing, and awards &rarr;</a></p>
-        </div>
-      </article>
-
-      <!-- Field Notes -->
-      <article class="panel" data-panel="notes" data-theme="notebook" hidden>
-        <header class="panel-head">
-          <p class="eyebrow">Field notes</p>
-          <h2>Things I've learned</h2>
-          <p>Short lessons from deals, internships, and the people I've worked with.</p>
-        </header>
-        <div class="panel-body lined">
-          <div class="note"><span class="note-date">[Date]</span><p>[A lesson in your own words, one or two sentences.]</p></div>
-          <div class="note"><span class="note-date">[Date]</span><p>[A lesson in your own words, one or two sentences.]</p></div>
-          <div class="note"><span class="note-date">[Date]</span><p>[A lesson in your own words, one or two sentences.]</p></div>
-        </div>
-      </article>
-
-      <!-- Contact -->
-      <article class="panel" data-panel="contact" data-theme="letter" hidden>
-        <header class="panel-head">
-          <p class="eyebrow">A note from Will</p>
-          <h2>Thanks for stopping by.</h2>
-        </header>
-        <div class="panel-body">
-          <p>[One warm line: what you're working on next, and how you'd like people to reach out.]</p>
-          <div class="btn-row">
-            <a class="btn" href="assets/Will-Murphy-Resume.pdf" target="_blank" rel="noopener">Download résumé</a>
-            <a class="btn btn-ghost" href="https://www.linkedin.com/in/will-murphy-3a53562a0/" target="_blank" rel="noopener">LinkedIn</a>
-            <a class="btn btn-ghost" href="https://substack.com/@willobserves" target="_blank" rel="noopener">Substack</a>
-          </div>
-          <p class="signoff">&mdash; Will</p>
-        </div>
-      </article>
-
-      <!-- Training -->
-      <article class="panel" data-panel="training" data-theme="bib" hidden>
-        <header class="panel-head">
-          <p class="eyebrow">Training</p>
-          <h2>Hybrid athlete</h2>
-          <p>Running and strength in the same week, starting early in the morning.</p>
-        </header>
-        <div class="panel-body">
-          <div class="race">
-            <div><span class="race-label">Goal race</span><strong>Hyrox Dallas</strong><span>November 2027</span></div>
-            <div class="countdown"><strong id="race-days">—</strong><span>days until race month</span></div>
-          </div>
-          <h3>How I train</h3>
-          <p>Hyrox mixes running with functional strength stations (sleds, carries, wall balls), so the training has to build both endurance and strength.</p>
-          <h3>How I fuel</h3>
-          <p>180g+ of protein a day, mostly whole foods, and carbs that flex with the session: more on long-run and double days, less on strength days.</p>
-          <p class="placeholder">[Optional: races you've run or are planning.]</p>
+          <section class="job" data-tabpanel="writing" hidden>
+            <p class="job-meta">Substack · @willobserves</p>
+            <h3>[Your Substack name]</h3>
+            <p>[One or two lines on what you write about and who it's for.]</p>
+            <a class="btn" href="https://substack.com/@willobserves" target="_blank" rel="noopener">Read on Substack &rarr;</a>
+          </section>
+          <p class="panel-more"><a href="accomplishments.html">See the full projects page &rarr;</a></p>
         </div>
       </article>
 
@@ -185,52 +116,24 @@
         <header class="panel-head">
           <p class="eyebrow">Off the clock</p>
           <h2>What I'm into</h2>
+          <p>Training, sports, and the things I do for fun.</p>
         </header>
         <div class="panel-body">
+          <div class="race">
+            <div><span class="race-label">Goal race</span><strong>Hyrox Dallas</strong><span>November 2027</span></div>
+            <div class="countdown"><strong id="race-days">&mdash;</strong><span>days until race month</span></div>
+          </div>
+          <h3>Training</h3>
+          <p>I train as a hybrid athlete: running and strength in the same week, starting early in the morning. I fuel it with 180g+ of protein a day and mostly whole foods.</p>
+          <h3>For fun</h3>
           <ul class="chips">
             <li style="--c: var(--green)"><strong>Golf</strong><span>[Why you love it.]</span></li>
             <li style="--c: var(--coral)"><strong>Formula 1</strong><span>[Favorite team or driver.]</span></li>
             <li style="--c: var(--blue)"><strong>Snow skiing</strong><span>[Favorite mountain.]</span></li>
             <li style="--c: var(--teal)"><strong>College football</strong><span>[A favorite Baylor game.]</span></li>
             <li style="--c: var(--coral)"><strong>Martial arts</strong><span>[What you train and where.]</span></li>
-            <li style="--c: var(--green)"><strong>Nutrition</strong><span>Whole foods, high protein, fuel for training.</span></li>
           </ul>
-          <p class="panel-more"><a href="interests.html">See the full page &rarr;</a></p>
-        </div>
-      </article>
-
-      <!-- Travel -->
-      <article class="panel" data-panel="travel" data-theme="passport" hidden>
-        <header class="panel-head">
-          <p class="eyebrow">Passport</p>
-          <h2>Places that changed me</h2>
-          <p>[A sentence on why travel matters to you.]</p>
-        </header>
-        <div class="panel-body">
-          <div class="stamps">
-            <div class="stamp" style="--c: var(--green); --r: -4deg"><span>Moved</span><b>Iowa &rarr; Texas</b><span>Summer 2015</span></div>
-            <div class="stamp" style="--c: var(--teal); --r: 3deg"><span>Study abroad</span><b>[Country]</b><span>Winter [Year]</span></div>
-            <div class="stamp" style="--c: var(--blue); --r: -2deg"><span>Next stamp</span><b>[Your next trip]</b><span>[When]</span></div>
-          </div>
-          <p class="placeholder">[A short story from studying abroad: what you expected, what happened.]</p>
-        </div>
-      </article>
-
-      <!-- Recognition -->
-      <article class="panel" data-panel="recognition" data-theme="diploma" hidden>
-        <header class="panel-head">
-          <p class="eyebrow">Recognition</p>
-          <h2>Baylor University</h2>
-          <p>BBA in Finance, Hankamer School of Business &middot; 3.92 GPA</p>
-        </header>
-        <div class="panel-body">
-          <ul class="honors">
-            <li><strong>Dean's Academic Honors List</strong><span>Fall 2023, Spring 2024, Fall 2024, Spring 2025, Spring 2026</span></li>
-            <li><strong>Baylor Distinction Award</strong><span>Scholarship</span></li>
-            <li><strong>Achievement Baylor Scholarship</strong><span>Scholarship</span></li>
-            <li><strong>Microsoft Office Associate</strong><span>Excel, Word, and PowerPoint certification</span></li>
-          </ul>
-          <p class="panel-more"><a href="accomplishments.html">Projects and writing &rarr;</a></p>
+          <p class="panel-more"><a href="interests.html">See the full interests page &rarr;</a></p>
         </div>
       </article>
     </div>
