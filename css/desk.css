@@ -241,3 +241,11 @@ body.leaving .fade { opacity: 1; }
   font-size: 14px; font-weight: 600; white-space: nowrap;
 }
 .case-ui[hidden] { display: none; }
+
+/* company website links in work experience */
+.company-link {
+  display: inline-block; margin: -2px 0 6px; font-size: 13.5px; font-weight: 700; color: var(--teal);
+  text-decoration: none; border-bottom: 1.5px solid currentColor;
+}
+.company-link:hover { color: var(--coral); }
+.docs-title { margin-top: 18px !important; }
