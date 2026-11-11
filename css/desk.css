@@ -249,3 +249,9 @@ body.leaving .fade { opacity: 1; }
 }
 .company-link:hover { color: var(--coral); }
 .docs-title { margin-top: 18px !important; }
+
+/* company logos in work experience */
+.panel[data-theme="briefcase"] .tabs button { display: inline-flex; align-items: center; gap: 6px; }
+.tab-logo { width: 18px; height: 18px; object-fit: contain; border-radius: 4px; background: #fff; padding: 1px; }
+.tab-logo.wide { width: 34px; padding: 1px 3px; }
+.job-logo { display: block; height: 46px; max-width: 190px; object-fit: contain; object-position: left center; margin: 0 0 10px; }
