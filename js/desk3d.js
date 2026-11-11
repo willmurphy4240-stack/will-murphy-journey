@@ -360,6 +360,31 @@ if (renderer) {
   envelope.add(seal);
   register('contact', envelope, new THREE.Vector3(0.1, 0.85, 3.85));
 
+  /* ---------- 5. Leather briefcase (Work Experience) ---------- */
+  const briefcase = at(-4.1, -1.5, 0.55);
+  const leather = std(0x6b3a1f, { roughness: 0.55 });
+  const trim = std(0x4a2512, { roughness: 0.5 });
+  const gold = std(0xc9a24a, { metalness: 0.8, roughness: 0.3 });
+  const caseBody = put(box(1.7, 1.15, 0.46, leather), { position: new THREE.Vector3(0, 0.6, 0) });
+  briefcase.add(caseBody);
+  briefcase.add(put(box(1.74, 0.07, 0.5, trim), { position: new THREE.Vector3(0, 0.88, 0) }));      // lid seam
+  [-0.5, 0.5].forEach((x) => {
+    briefcase.add(put(box(0.12, 1.17, 0.48, trim), { position: new THREE.Vector3(x, 0.6, 0) }));   // straps
+    briefcase.add(put(box(0.16, 0.12, 0.05, gold), { position: new THREE.Vector3(x, 0.88, 0.255) })); // clasps
+  });
+  const caseHandle = new THREE.Mesh(new THREE.TorusGeometry(0.24, 0.05, 12, 28, Math.PI), trim);
+  caseHandle.position.set(0, 1.18, 0);
+  briefcase.add(caseHandle);
+  [-0.24, 0.24].forEach((x) => briefcase.add(put(box(0.1, 0.06, 0.12, gold), { position: new THREE.Vector3(x, 1.2, 0) })));
+  const tagTex = tex(300, 180, (g, w, h) => {
+    g.fillStyle = '#F3E9D8'; g.fillRect(0, 0, w, h);
+    g.fillStyle = '#2A2622'; g.font = `800 64px ${SERIF}`; g.textAlign = 'center'; g.fillText('W.M.', w / 2, 110);
+  });
+  const nameTag = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.25), std(0xffffff, { map: tagTex, roughness: 0.8 }));
+  nameTag.position.set(0, 0.5, 0.232);
+  briefcase.add(nameTag);
+  register('experience', briefcase, new THREE.Vector3(-4.1, 1.75, -1.5));
+
   /* ---------- decor ---------- */
   // desk lamp with a warm spotlight
   const lamp = at(5.55, -0.7, 0);

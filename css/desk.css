@@ -214,3 +214,8 @@ body.leaving .fade { opacity: 1; }
 .valuation strong { font-family: var(--serif); font-size: 24px; }
 .valuation em { font-size: 12.5px; font-style: normal; color: var(--coral); font-weight: 700; }
 .small-note { font-size: 13.5px; color: var(--ink-soft); }
+
+/* briefcase (work experience) */
+.panel[data-theme="briefcase"] { --head: #6B3A1F; --head-ink: #F3E6CC; }
+.panel[data-theme="briefcase"] .tabs button { background: #8A5230; color: #F3E6CC; }
+.panel[data-theme="briefcase"] .tabs button[aria-selected="true"] { background: var(--paper); color: var(--ink); }

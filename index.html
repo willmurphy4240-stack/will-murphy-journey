@@ -33,6 +33,7 @@
     <canvas id="scene" aria-hidden="true"></canvas>
     <nav id="tags" class="tags" aria-label="Things on the desk">
       <button class="tag3d primary" data-open="journey">Start the journey &rarr;</button>
+      <button class="tag3d" data-open="experience">Work Experience</button>
       <button class="tag3d" data-open="projects">Projects</button>
       <button class="tag3d" data-open="interests">Interests</button>
       <button class="tag3d" data-open="contact">Contact</button>
@@ -53,6 +54,67 @@
   <div id="panel-shell" class="panel-shell" hidden>
     <div class="panel-card" role="dialog" aria-modal="true" aria-labelledby="panel-title">
       <div class="panel-bar"><button class="panel-back" type="button">&larr; Back to the desk</button></div>
+
+      <!-- Work Experience -->
+      <article class="panel" data-panel="experience" data-theme="briefcase" hidden>
+        <header class="panel-head">
+          <p class="eyebrow">Work experience</p>
+          <h2>Where I've worked</h2>
+          <p>Private equity, real estate acquisitions, and an AI project, from Austin summers to Waco and next, Houston.</p>
+        </header>
+        <div class="tabs" role="tablist">
+          <button role="tab" aria-selected="true" data-tab="zions">Zions</button>
+          <button role="tab" aria-selected="false" data-tab="oakdale">Oakdale</button>
+          <button role="tab" aria-selected="false" data-tab="altus">Altus</button>
+          <button role="tab" aria-selected="false" data-tab="prophet">Prophet</button>
+          <button role="tab" aria-selected="false" data-tab="ban">Angel Network</button>
+        </div>
+        <div class="panel-body">
+          <section class="job" data-tabpanel="zions">
+            <p class="job-meta">Starting 2027 · Houston, TX</p>
+            <h3>Syndication &amp; Leverage Finance Analyst, Zions Capital Markets</h3>
+            <p>Joining the Syndication &amp; Leverage Finance team at Zions Capital Markets in Houston as an analyst.</p>
+          </section>
+          <section class="job" data-tabpanel="oakdale" hidden>
+            <p class="job-meta">Aug 2026 – Spring 2027 · Waco, TX</p>
+            <h3>Private Equity Intern, Oakdale Capital</h3>
+            <ul>
+              <li>Due diligence on a pre-revenue growth-equity deal, modeling the key business drivers.</li>
+              <li>Joined banker calls and prepared diligence questions for founders on an active deal team.</li>
+              <li>Sat in on pipeline meetings with founders to source and evaluate new investments.</li>
+              <li>Working there full time in spring 2027.</li>
+            </ul>
+          </section>
+          <section class="job" data-tabpanel="altus" hidden>
+            <p class="job-meta">Summer 2026 · Austin, TX</p>
+            <h3>Acquisition Intern, Altus Equity Group</h3>
+            <ul>
+              <li>Underwrote 55+ deals averaging $25M: cash flows, cap rates, DSCR, and levered IRR.</li>
+              <li>Analyzed deal-room data across active acquisitions, including asset-level financials and market comps.</li>
+              <li>Worked with senior leadership on deal strategy and portfolio positioning.</li>
+              <li>Managed broker communications across the active pipeline.</li>
+            </ul>
+          </section>
+          <section class="job" data-tabpanel="prophet" hidden>
+            <p class="job-meta">Summer 2025 · Austin, TX</p>
+            <h3>Summer Financial/AI Analyst, Prophet Capital Asset Management</h3>
+            <ul>
+              <li>Set up Microsoft Copilot to cross-check pitch book analytics against Limited Partnership Agreements, cutting manual review time by more than 50%.</li>
+              <li>Led the firm's first company-wide Copilot demo, showing AI workflows for legal documents and financials.</li>
+            </ul>
+          </section>
+          <section class="job" data-tabpanel="ban" hidden>
+            <p class="job-meta">Oct 2025 – Mar 2026 · Waco, TX</p>
+            <h3>Junior Analyst, Baylor Angel Network</h3>
+            <ul>
+              <li>Due diligence on two startups (markets, financials, and risks) for the investment committee.</li>
+              <li>Worked with a senior analyst and angel mentors to evaluate business models and refine recommendations.</li>
+              <li>Met founders and angel investors at Presentation Day.</li>
+            </ul>
+          </section>
+          <p class="panel-more"><a href="assets/Will-Murphy-Resume.pdf" target="_blank" rel="noopener">Full résumé (PDF) &rarr;</a></p>
+        </div>
+      </article>
 
       <!-- Projects -->
       <article class="panel" data-panel="projects" data-theme="folder" hidden>
