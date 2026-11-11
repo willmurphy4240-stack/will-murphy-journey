@@ -227,3 +227,12 @@ body.leaving .fade { opacity: 1; }
 .deal h4 { font-family: var(--serif); font-size: 20px; margin: 0 0 6px; }
 .deal p { font-size: 15px; margin: 0 0 8px !important; }
 .deal-what { color: var(--ink-soft); font-style: italic; }
+
+/* inside the briefcase */
+.case-ui {
+  position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 15;
+  display: flex; align-items: center; gap: 14px; padding: 8px 16px 8px 8px; border-radius: 999px;
+  background: rgba(251, 246, 234, .95); box-shadow: 0 12px 26px -12px rgba(0, 0, 0, .7);
+  font-size: 14px; font-weight: 600; white-space: nowrap;
+}
+.case-ui[hidden] { display: none; }

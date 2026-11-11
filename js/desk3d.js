@@ -360,30 +360,74 @@ if (renderer) {
   envelope.add(seal);
   register('contact', envelope, new THREE.Vector3(0.1, 0.85, 3.85));
 
-  /* ---------- 5. Leather briefcase (Work Experience) ---------- */
+  /* ---------- 5. Leather briefcase (Work Experience): the lid opens and the jobs are inside ---------- */
   const briefcase = at(-4.1, -1.5, 0.55);
   const leather = std(0x6b3a1f, { roughness: 0.55 });
   const trim = std(0x4a2512, { roughness: 0.5 });
   const gold = std(0xc9a24a, { metalness: 0.8, roughness: 0.3 });
-  const caseBody = put(box(1.7, 1.15, 0.46, leather), { position: new THREE.Vector3(0, 0.6, 0) });
-  briefcase.add(caseBody);
-  briefcase.add(put(box(1.74, 0.07, 0.5, trim), { position: new THREE.Vector3(0, 0.88, 0) }));      // lid seam
-  [-0.5, 0.5].forEach((x) => {
-    briefcase.add(put(box(0.12, 1.17, 0.48, trim), { position: new THREE.Vector3(x, 0.6, 0) }));   // straps
-    briefcase.add(put(box(0.16, 0.12, 0.05, gold), { position: new THREE.Vector3(x, 0.88, 0.255) })); // clasps
-  });
-  const caseHandle = new THREE.Mesh(new THREE.TorusGeometry(0.24, 0.05, 12, 28, Math.PI), trim);
-  caseHandle.position.set(0, 1.18, 0);
+  const felt = std(0x7a2e22, { roughness: 0.95 });
+  const CW = 1.8, CH = 0.42, CD = 1.25, T = 0.05;
+  // base: floor + four walls, open on top
+  briefcase.add(put(box(CW, T, CD, leather), { position: new THREE.Vector3(0, T / 2, 0) }));
+  briefcase.add(put(box(CW - 2 * T, 0.01, CD - 2 * T, felt), { position: new THREE.Vector3(0, T + 0.005, 0) }));
+  briefcase.add(put(box(CW, CH, T, leather), { position: new THREE.Vector3(0, CH / 2, CD / 2 - T / 2) }));
+  briefcase.add(put(box(CW, CH, T, leather), { position: new THREE.Vector3(0, CH / 2, -CD / 2 + T / 2) }));
+  briefcase.add(put(box(T, CH, CD, leather), { position: new THREE.Vector3(CW / 2 - T / 2, CH / 2, 0) }));
+  briefcase.add(put(box(T, CH, CD, leather), { position: new THREE.Vector3(-CW / 2 + T / 2, CH / 2, 0) }));
+  briefcase.add(put(box(CW + 0.02, 0.06, 0.02, trim), { position: new THREE.Vector3(0, CH - 0.04, CD / 2 + 0.005) }));
+  [-0.55, 0.55].forEach((x) => briefcase.add(put(box(0.16, 0.12, 0.04, gold), { position: new THREE.Vector3(x, CH - 0.04, CD / 2 + 0.02) })));
+  const caseHandle = new THREE.Mesh(new THREE.TorusGeometry(0.22, 0.045, 12, 28, Math.PI), trim);
+  caseHandle.rotation.x = Math.PI / 2;
+  caseHandle.position.set(0, CH * 0.55, CD / 2);
   briefcase.add(caseHandle);
-  [-0.24, 0.24].forEach((x) => briefcase.add(put(box(0.1, 0.06, 0.12, gold), { position: new THREE.Vector3(x, 1.2, 0) })));
-  const tagTex = tex(300, 180, (g, w, h) => {
-    g.fillStyle = '#F3E9D8'; g.fillRect(0, 0, w, h);
+  // lid, hinged along the back edge
+  const lidPivot = new THREE.Group();
+  lidPivot.position.set(0, CH, -CD / 2);
+  briefcase.add(lidPivot);
+  lidPivot.add(put(box(CW + 0.02, 0.08, CD + 0.02, leather), { position: new THREE.Vector3(0, 0.04, CD / 2) }));
+  lidPivot.add(put(box(CW - 0.1, 0.01, CD - 0.1, felt), { position: new THREE.Vector3(0, -0.006, CD / 2) }));
+  [-0.5, 0.5].forEach((x) => lidPivot.add(put(box(0.12, 0.09, CD + 0.03, trim), { position: new THREE.Vector3(x, 0.045, CD / 2) })));
+  const tagTex = tex(300, 180, (g, w) => {
+    g.fillStyle = '#F3E9D8'; g.fillRect(0, 0, w, 180);
     g.fillStyle = '#2A2622'; g.font = `800 64px ${SERIF}`; g.textAlign = 'center'; g.fillText('W.M.', w / 2, 110);
   });
   const nameTag = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.25), std(0xffffff, { map: tagTex, roughness: 0.8 }));
-  nameTag.position.set(0, 0.5, 0.232);
-  briefcase.add(nameTag);
-  register('experience', briefcase, new THREE.Vector3(-4.1, 1.75, -1.5));
+  nameTag.rotation.x = -Math.PI / 2;
+  nameTag.position.set(0, 0.0815, CD / 2 + 0.25);
+  lidPivot.add(nameTag);
+  let lidOpen = 0, lidTarget = 0;
+
+  // the jobs: five files lying inside the case
+  const jobs = [
+    { tab: 'zions', name: 'Zions Capital Markets', role: 'Syndication & Leverage Finance', when: '2027 · Houston', color: '#2860C4' },
+    { tab: 'oakdale', name: 'Oakdale Capital', role: 'Private Equity Intern', when: '2026 – 27 · Waco', color: '#2E7D46' },
+    { tab: 'altus', name: 'Altus Equity Group', role: 'Acquisition Intern', when: 'Summer 2026 · Austin', color: '#C8431C' },
+    { tab: 'prophet', name: 'Prophet Capital', role: 'Financial / AI Analyst', when: 'Summer 2025 · Austin', color: '#0E7C72' },
+    { tab: 'ban', name: 'Baylor Angel Network', role: 'Junior Analyst', when: '2025 – 26 · Waco', color: '#1F3A5C' }
+  ];
+  const slots = [[-0.56, -0.26, 0.04], [0, -0.27, -0.03], [0.56, -0.25, 0.05], [-0.29, 0.23, -0.04], [0.29, 0.24, 0.03]];
+  const files = jobs.map((j, i) => {
+    const t = tex(560, 400, (g, w, h) => {
+      g.fillStyle = '#FBF6EA'; g.fillRect(0, 0, w, h);
+      g.fillStyle = j.color; g.fillRect(0, 0, w, 74);
+      g.fillStyle = '#fff'; g.font = `700 30px ${SANS}`; g.fillText(j.when.toUpperCase(), 26, 49);
+      let size = 56;
+      do { g.font = `800 ${size}px ${SERIF}`; size -= 2; } while (g.measureText(j.name).width > w - 52 && size > 30);
+      g.fillStyle = '#2A2622'; g.fillText(j.name, 26, 168);
+      g.fillStyle = '#5E554B'; g.font = `600 32px ${SANS}`; g.fillText(j.role, 26, 222);
+      g.fillStyle = j.color; g.font = `700 28px ${SANS}`; g.fillText('OPEN FILE →', 26, 350);
+      g.strokeStyle = 'rgba(42,38,34,.15)'; g.lineWidth = 4; g.strokeRect(2, 2, w - 4, h - 4);
+    });
+    const card = put(topBox(0.5, 0.025, 0.36, 0xfbf6ea, t), {
+      position: new THREE.Vector3(slots[i][0], T + 0.025, slots[i][1]),
+      rotation: new THREE.Euler(0, slots[i][2], 0)
+    });
+    card.userData.job = j.tab;
+    card.userData.baseY = card.position.y;
+    briefcase.add(card);
+    return card;
+  });
+  register('experience', briefcase, new THREE.Vector3(-4.1, 1.0, -1.5));
 
   /* ---------- decor ---------- */
   // desk lamp with a warm spotlight
@@ -459,8 +503,18 @@ if (renderer) {
     const hit = ray.intersectObjects(hits, false)[0];
     return hit ? hit.object.userData.id : null;
   }
+  let hoveredFile = null;
+  function pickFile(e) {
+    const r = canvas.getBoundingClientRect();
+    ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+    ray.setFromCamera(ndc, camera);
+    const hit = ray.intersectObjects(files, false)[0];
+    return hit ? hit.object.userData.job : null;
+  }
   canvas.addEventListener('pointermove', (e) => {
-    if (mode !== 'explore' || e.pointerType !== 'mouse') return;
+    if (e.pointerType !== 'mouse') return;
+    if (mode === 'case') { hoveredFile = pickFile(e); canvas.style.cursor = hoveredFile ? 'pointer' : 'zoom-out'; return; }
+    if (mode !== 'explore') return;
     hovered = pick(e);
     canvas.style.cursor = hovered ? 'pointer' : 'grab';
     tagEls.forEach((t) => t.classList.toggle('hot', t.dataset.open === hovered));
@@ -473,6 +527,7 @@ if (renderer) {
     down = null;
     if (moved) return;
     if (mode === 'explore') { const id = pick(e); if (id) open(id); }
+    else if (mode === 'case') { const job = pickFile(e); if (job) openFile(job); else closeCase(); }
     else if (mode === 'focus') close();
   });
 
@@ -513,13 +568,75 @@ if (renderer) {
       setTimeout(() => { location.href = 'journey.html'; }, reduce ? 0 : 1150);
       return;
     }
+    if (id === 'experience') { openCase(); return; }
     mode = 'focus';
     document.body.classList.add('focused');
     const p = focusPose(id);
     fly(p.pos, p.target, isPhone() ? { offX: 0, offY: 0.2 } : { offX: 0.22, offY: 0 }, 1100);
     showPanel(id);
   }
+  /* ----- the briefcase: open it, pick a file, read it, close it ----- */
+  const caseUI = document.getElementById('case-ui');
+  let fromCase = false;
+  function casePose() {
+    const center = new THREE.Vector3(0, CH * 0.4, 0);
+    briefcase.localToWorld(center);
+    const front = new THREE.Vector3(0, 0, 1).applyQuaternion(briefcase.getWorldQuaternion(new THREE.Quaternion()));
+    const dir = front.multiplyScalar(0.62).add(new THREE.Vector3(0, 1, 0)).normalize();
+    const dist = (1.15 / Math.sin(THREE.MathUtils.degToRad(camera.fov / 2))) * (isPhone() ? 1.75 : 1.0);
+    return { pos: center.clone().add(dir.multiplyScalar(dist)), target: center };
+  }
+  function openCase() {
+    mode = 'case';
+    document.body.classList.add('focused', 'in-case');
+    lidTarget = 1;
+    const p = casePose();
+    fly(p.pos, p.target, { offX: 0, offY: 0 }, 1200);
+    caseUI.hidden = false;
+    history.replaceState(null, '', '#experience');
+  }
+  function openFile(job) {
+    mode = 'focus';
+    fromCase = true;
+    hoveredFile = null;
+    document.body.classList.remove('in-case');
+    caseUI.hidden = true;
+    shell.querySelector(`[data-panel="experience"] [data-tab="${job}"]`)?.click();
+    backBtn.textContent = '← Back to the briefcase';
+    const p = casePose();
+    fly(p.pos, p.target, isPhone() ? { offX: 0, offY: 0.24 } : { offX: 0.22, offY: 0 }, 800);
+    showPanel('experience');
+  }
+  function closeCase() {
+    if (mode !== 'case') return;
+    mode = 'returning';
+    lidTarget = 0;
+    hoveredFile = null;
+    caseUI.hidden = true;
+    document.body.classList.remove('focused', 'in-case');
+    history.replaceState(null, '', location.pathname);
+    setTimeout(() => fly(saved.pos, saved.target, { offX: 0, offY: 0 }, 1100, () => {
+      mode = 'explore'; controls.enabled = true;
+      const t = tagEls.find((x) => x.dataset.open === 'experience'); current = null;
+      if (t) t.focus({ preventScroll: true });
+    }), reduce ? 0 : 450);
+  }
+  caseUI.querySelector('.case-back').addEventListener('click', closeCase);
+
   function close() {
+    if (mode === 'focus' && fromCase) {          // from a file, go back into the briefcase
+      fromCase = false;
+      hidePanel();
+      backBtn.textContent = '← Back to the desk';
+      mode = 'case';
+      document.body.classList.add('in-case');
+      caseUI.hidden = false;
+      history.replaceState(null, '', '#experience');
+      const p = casePose();
+      fly(p.pos, p.target, { offX: 0, offY: 0 }, 700);
+      setTimeout(() => { if (mode === 'case') shell.hidden = true; }, reduce ? 0 : 420);
+      return;
+    }
     if (mode !== 'focus') return;
     mode = 'returning';
     document.body.classList.remove('focused');
@@ -530,7 +647,7 @@ if (renderer) {
       if (t) t.focus({ preventScroll: true });
     });
   }
-  api = { open, close };
+  api = { open, close, closeCase };
 
   /* ---------- floating tags ---------- */
   const v = new THREE.Vector3();
@@ -564,6 +681,13 @@ if (renderer) {
       c.lift += (want - c.lift) * Math.min(1, dt * 10);
       c.group.position.y = c.group.userData.baseY + c.lift;
     }
+
+    lidOpen += (lidTarget - lidOpen) * (reduce ? 1 : Math.min(1, dt * 3.2));
+    lidPivot.rotation.x = -lidOpen * 1.95;
+    files.forEach((f) => {
+      const want = (mode === 'case' && f.userData.job === hoveredFile) ? 0.06 : 0;
+      f.position.y += (f.userData.baseY + want - f.position.y) * Math.min(1, dt * 12);
+    });
 
     if (tween) {
       const t = Math.min(1, (now - tween.t0) / tween.ms), e = ease(t);
@@ -602,7 +726,11 @@ backBtn.addEventListener('click', () => {
   if (api) api.close();
   else { mode = 'explore'; document.body.classList.remove('focused'); hidePanel(); }
 });
-addEventListener('keydown', (e) => { if (e.key === 'Escape' && mode === 'focus') backBtn.click(); });
+addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  if (mode === 'focus') backBtn.click();
+  else if (mode === 'case' && api) api.closeCase();
+});
 
 const fromHash = location.hash.slice(1);
 if (fromHash && fromHash !== 'journey' && panels.some((p) => p.dataset.panel === fromHash)) {
