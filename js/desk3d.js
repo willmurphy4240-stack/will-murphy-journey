@@ -49,8 +49,6 @@ shell.querySelectorAll('.tabs').forEach((tabs) => {
     });
   });
 });
-const raceEl = document.getElementById('race-days');
-if (raceEl) raceEl.textContent = Math.max(0, Math.ceil((new Date(2027, 10, 1) - new Date()) / 86400000));
 
 let hintTimer = setTimeout(hideHint, 10000);
 function hideHint() { clearTimeout(hintTimer); document.body.classList.add('hint-off'); }

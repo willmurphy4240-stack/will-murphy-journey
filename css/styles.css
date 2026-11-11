@@ -318,3 +318,30 @@ body.journey { animation: pagein .7s ease both; }
   .card h2 { font-size: 34px; }
   .feature { grid-template-columns: 1fr; padding: 24px; }
 }
+
+/* ==========================================================================
+   Interests list (desk panel + interests page)
+   ========================================================================== */
+.interest-group + .interest-group { margin-top: 22px; }
+.interest-heading {
+  display: flex; align-items: center; gap: 10px; margin: 0 0 10px !important;
+  font-family: var(--sans) !important; font-size: 11.5px !important; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft);
+}
+.interest-heading::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.interest-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.interest {
+  display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px;
+  background: #FFFDF8; border: 1px solid var(--line); border-radius: 12px;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.interest:hover { transform: translateY(-2px); box-shadow: 0 12px 22px -16px rgba(40, 22, 8, .55); border-color: var(--c); }
+.interest-icon {
+  flex: none; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--c) 14%, #FFFDF8); color: var(--c);
+}
+.interest-icon svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.interest strong { display: block; font-family: var(--serif); font-size: 17.5px; line-height: 1.2; margin-top: 1px; }
+.interest p { margin: 3px 0 0 !important; font-size: 14px; line-height: 1.45; color: var(--ink-soft); }
+.interests-page .interest-list { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.interests-page .interest-group + .interest-group { margin-top: 34px; }
+.interests-page .interest-heading { font-size: 12.5px !important; }
