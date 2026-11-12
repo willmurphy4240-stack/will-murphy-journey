@@ -15,12 +15,11 @@ window.JOURNEY = {
       coords: [41.8517, -91.5579],
       alt: 0.2,      // how close the globe camera gets (smaller = closer)
       color: '#2E7D46',
-      blurb: '[One or two sentences about growing up in Shueyville: family, first interests, what shaped you.]',
-      intro: '[Optional: a slightly longer intro for the highlights panel.]',
+      blurb: 'I grew up outside with the neighborhood kids, playing every sport we could. Being around people who trained hard and showed up every day is where my grit and discipline started.',
+      intro: 'A neighborhood full of kids, and almost all of our time spent outside.',
       highlights: [
-        { date: '[Year]', title: '[Highlight title]', text: '[A few sentences: what you did, why it mattered, what you learned.]' },
-        { date: '[Year]', title: '[Highlight title]', text: '[A few sentences: what you did, why it mattered, what you learned.]' },
-        { date: '[Year]', title: '[Highlight title]', text: '[A few sentences: what you did, why it mattered, what you learned.]' }
+        { date: '2004 – 2015', title: 'Growing up outside', text: 'Pickup games in the yard, driving golf carts and Rangers around the neighborhood, and building giant leaf piles every fall. If it was outside, we were doing it.' },
+        { date: '2004 – 2015', title: 'Where my grit came from', text: 'I played a lot of sports and grew up around high performers who stayed consistent with their training. Seeing that up close taught me that discipline is built one day at a time.' }
       ]
     },
     {
