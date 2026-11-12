@@ -463,14 +463,23 @@ if (renderer) {
   plant.add(put(new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.4, 0.75, 28), std(0xb5603c)), { position: new THREE.Vector3(0, 0.375, 0) }));
   plant.add(put(new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.03, 28), std(0x4a3020)), { position: new THREE.Vector3(0, 0.72, 0) }));
   const leafMat = std(0x5e8c4e, { roughness: 0.6 }), leafMat2 = std(0x7faf68, { roughness: 0.6 });
-  for (let i = 0; i < 9; i++) {
-    const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.16, 14, 10), i % 2 ? leafMat : leafMat2);
-    const a = i / 9 * Math.PI * 2;
-    leaf.scale.set(1, 3.4, 0.55);
-    leaf.position.set(Math.cos(a) * 0.22, 1.18 + (i % 3) * 0.08, Math.sin(a) * 0.22);
-    leaf.rotation.set(Math.sin(a) * 0.55, -a, -Math.cos(a) * 0.55);
-    plant.add(leaf);
+  // leaves fan out evenly from the middle of the pot
+  const leafGeo = new THREE.SphereGeometry(0.16, 14, 10);
+  for (let i = 0; i < 8; i++) {
+    const pivot = new THREE.Group();
+    pivot.position.y = 0.72;
+    pivot.rotation.y = (i / 8) * Math.PI * 2;
+    const leaf = new THREE.Mesh(leafGeo, i % 2 ? leafMat : leafMat2);
+    leaf.scale.set(1, 3.2, 0.55);
+    leaf.rotation.z = -0.38;                    // tilt outward
+    leaf.position.set(0.17, 0.44 + (i % 2) * 0.05, 0);
+    pivot.add(leaf);
+    plant.add(pivot);
   }
+  const center = new THREE.Mesh(leafGeo, leafMat2);
+  center.scale.set(1, 3.6, 0.6);
+  center.position.y = 0.72 + 0.52;
+  plant.add(center);
   island.add(plant);
 
   // pen
