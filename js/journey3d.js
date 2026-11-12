@@ -39,7 +39,6 @@ stops.forEach((s, i) => {
        <h2>${s.place}</h2>
        <p class="card-where">${s.where}</p>
        <p class="card-blurb">${s.blurb}</p>
-       <button class="btn" type="button" data-stop="${i}">See highlights <span aria-hidden="true">&rarr;</span></button>
      </article>`;
   story.insertBefore(sec, outro);
   steps.push({ el: sec, type: 'stop', i, segs: i, stop: i });
@@ -228,48 +227,3 @@ const io = new IntersectionObserver((entries) => {
 }, { rootMargin: '-45% 0px -54% 0px' });
 steps.forEach((s) => io.observe(s.el));
 activate(0);
-
-/* ---------- Highlights drawer ---------- */
-const drawer = document.getElementById('drawer');
-const drawerBody = document.getElementById('drawer-body');
-const backdrop = document.getElementById('drawer-backdrop');
-const closeBtn = drawer.querySelector('.drawer-close');
-let lastFocus = null;
-drawer.inert = true;
-
-function openDrawer(i) {
-  const s = stops[i];
-  drawer.style.setProperty('--c', s.color);
-  drawerBody.innerHTML =
-    `<div class="card-num">${s.num}</div>
-     <p class="card-years">${s.years} &middot; ${s.where}</p>
-     <h2 id="drawer-title">${s.place}</h2>
-     ${s.intro ? `<p class="drawer-intro">${s.intro}</p>` : ''}
-     <ul class="hl-list">
-       ${s.highlights.map((h) => `
-         <li class="hl">
-           ${h.date ? `<div class="hl-date">${h.date}</div>` : ''}
-           <h3>${h.title}</h3>
-           <p>${h.text}</p>
-           ${h.image ? `<img src="${h.image}" alt="${h.alt || h.title}" loading="lazy">` : ''}
-           ${h.link ? `<a href="${h.link}" target="_blank" rel="noopener">Learn more &rarr;</a>` : ''}
-         </li>`).join('')}
-     </ul>`;
-  lastFocus = document.activeElement;
-  drawer.inert = false;
-  document.body.classList.add('drawer-open');
-  drawer.scrollTop = 0;
-  closeBtn.focus({ preventScroll: true });
-}
-function closeDrawer() {
-  document.body.classList.remove('drawer-open');
-  drawer.inert = true;
-  if (lastFocus) lastFocus.focus({ preventScroll: true });
-}
-story.addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-stop]');
-  if (btn) openDrawer(+btn.dataset.stop);
-});
-closeBtn.addEventListener('click', closeDrawer);
-backdrop.addEventListener('click', closeDrawer);
-addEventListener('keydown', (e) => { if (e.key === 'Escape' && document.body.classList.contains('drawer-open')) closeDrawer(); });

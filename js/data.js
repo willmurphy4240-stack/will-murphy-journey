@@ -15,7 +15,7 @@ window.JOURNEY = {
       coords: [41.8517, -91.5579],
       alt: 0.2,      // how close the globe camera gets (smaller = closer)
       color: '#2E7D46',
-      blurb: 'I grew up outside with the neighborhood kids, playing every sport we could. Being around people who trained hard and showed up every day is where my grit and discipline started.',
+      blurb: 'I grew up outside with the neighborhood kids: pickup games in the yard, driving golf carts and Rangers, and building giant leaf piles every fall.',
       intro: 'A neighborhood full of kids, and almost all of our time spent outside.',
       highlights: [
         { date: '2004 – 2015', title: 'Growing up outside', text: 'Pickup games in the yard, driving golf carts and Rangers around the neighborhood, and building giant leaf piles every fall. If it was outside, we were doing it.' },

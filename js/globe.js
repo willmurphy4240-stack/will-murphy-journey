@@ -8,7 +8,7 @@ const DEG = Math.PI / 180;
 let dataPromise = null;
 function loadData() {
   dataPromise ||= Promise.all([
-    fetch('assets/data/land-110m.json').then((r) => r.json()),
+    fetch('assets/data/land-50m.json').then((r) => r.json()),
     fetch('assets/data/states-10m.json').then((r) => r.json())
   ]);
   return dataPromise;
@@ -53,7 +53,7 @@ function dotTexture() {
 }
 
 export const GLOBE_COLORS = {
-  ocean: '#F2E3C2', land: '#DCC18E', dots: '#7E5A2C', coast: '#5A3E1E', grid: '#B89A66', states: '#A88A5A', visited: '#C8431C', glow: '#F5C27A'
+  ocean: '#F2E3C2', land: '#DCC18E', visitedFill: '#E8B48C', dots: '#7E5A2C', coast: '#5A3E1E', grid: '#B89A66', states: '#A88A5A', visited: '#C8431C', glow: '#F5C27A'
 };
 
 /**
@@ -74,6 +74,10 @@ export async function buildGlobe(o = {}) {
   fctx.fillStyle = C.ocean; fctx.fillRect(0, 0, fill.width, fill.height);
   const fproj = geoEquirectangular().scale(fill.width / (2 * Math.PI)).translate([fill.width / 2, fill.height / 2]).precision(0.1);
   fctx.beginPath(); geoPath(fproj, fctx)(land); fctx.fillStyle = C.land; fctx.fill();
+  if (o.states !== false) {   // soft tint on the states I've lived in
+    const lived = feature(us, us.objects.states).features.filter((f) => f.id === '19' || f.id === '48');
+    fctx.beginPath(); lived.forEach((f) => geoPath(fproj, fctx)(f)); fctx.fillStyle = C.visitedFill; fctx.fill();
+  }
   const fillTex = new THREE.CanvasTexture(fill);
   fillTex.colorSpace = THREE.SRGBColorSpace;
   fillTex.anisotropy = 8;
@@ -96,13 +100,6 @@ export async function buildGlobe(o = {}) {
   // US states (internal borders faint, Iowa + Texas highlighted)
   if (o.states !== false) {
     group.add(lineSegments(mesh(us, us.objects.states, (a, b) => a !== b).coordinates, radius * 1.002, C.states, 0.7));
-    const visited = feature(us, us.objects.states).features.filter((f) => f.id === '19' || f.id === '48');
-    const rings = [];
-    visited.forEach((f) => {
-      const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
-      polys.forEach((p) => rings.push(...p));
-    });
-    group.add(lineSegments(rings, radius * 1.003, C.visited));
   }
 
   // dotted land, sampled from a land mask
