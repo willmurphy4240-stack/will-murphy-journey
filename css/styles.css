@@ -263,7 +263,8 @@ body.journey {
   background: radial-gradient(ellipse at 60% 45%, #5C3B22 0%, #3A2414 45%, #1B100A 100%) fixed;
   color: var(--paper);
 }
-#globe { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; display: block; }
+#globe { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; display: block; opacity: 0; transition: opacity .8s ease; }
+body.globe-ready #globe { opacity: 1; }
 .globe-vignette {
   position: fixed; inset: 0; z-index: 1; pointer-events: none;
   background: radial-gradient(ellipse at center, transparent 55%, rgba(15, 8, 3, .55) 100%);

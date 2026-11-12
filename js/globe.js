@@ -53,7 +53,7 @@ function dotTexture() {
 }
 
 export const GLOBE_COLORS = {
-  ocean: '#F2E3C2', land: '#E2CA9A', dots: '#7E5A2C', coast: '#5A3E1E', grid: '#B89A66', states: '#A88A5A', visited: '#C8431C', glow: '#F5C27A'
+  ocean: '#F2E3C2', land: '#DCC18E', dots: '#7E5A2C', coast: '#5A3E1E', grid: '#B89A66', states: '#A88A5A', visited: '#C8431C', glow: '#F5C27A'
 };
 
 /**
@@ -69,7 +69,7 @@ export async function buildGlobe(o = {}) {
   const group = new THREE.Group();
 
   // ocean / paper sphere with a soft tan land fill under the dots
-  const fill = document.createElement('canvas'); fill.width = 4096; fill.height = 2048;
+  const fill = document.createElement('canvas'); fill.width = 2048; fill.height = 1024;   // lighter GPU upload; coastlines stay crisp as 3D lines
   const fctx = fill.getContext('2d');
   fctx.fillStyle = C.ocean; fctx.fillRect(0, 0, fill.width, fill.height);
   const fproj = geoEquirectangular().scale(fill.width / (2 * Math.PI)).translate([fill.width / 2, fill.height / 2]).precision(0.1);
@@ -146,6 +146,7 @@ export async function buildGlobe(o = {}) {
   return {
     group, sphere, radius,
     setDotSize: (s) => { dotMat.size = s; },
+    setDotOpacity: (o) => { dotMat.opacity = o; dotMat.visible = o > 0.01; },
     point: (lat, lon, h = 0) => ll2v(lat, lon, radius * (1 + h))
   };
 }

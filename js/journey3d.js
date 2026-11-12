@@ -60,7 +60,7 @@ const railLinks = stops.map((s) => {
 /* ---------- Three.js scene ---------- */
 const canvas = document.getElementById('globe');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(35, 1, 0.0005, 100);
@@ -70,7 +70,6 @@ scene.add(sun);
 
 const globe = await buildGlobe({ radius: 1, dotStep: 0.7 });
 scene.add(globe.group);
-document.body.classList.add('globe-ready');
 
 // pins
 const pins = stops.map((s) => {
@@ -173,6 +172,8 @@ function frame(now) {
   sun.position.copy(camera.position).add(tmp.set(-2, 2, 0)).normalize().multiplyScalar(5);
 
   globe.setDotSize(renderer.getPixelRatio() * Math.min(5, Math.max(1.6, 1.5 / Math.sqrt(cam.alt))));
+  // dots only when zoomed in; from far away they read as grain, so the smooth land fill shows instead
+  globe.setDotOpacity(Math.min(1, Math.max(0, (0.95 - cam.alt) / 0.6)));
 
   // pin size stays readable at any zoom
   const pinScale = Math.max(0.0006, cam.alt * 0.0065);
@@ -203,6 +204,7 @@ function frame(now) {
   });
 
   renderer.render(scene, camera);
+  if (!document.body.classList.contains('globe-ready')) document.body.classList.add('globe-ready');
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
