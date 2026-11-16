@@ -31,10 +31,12 @@ window.JOURNEY = {
       coords: [30.3905, -97.8555],
       alt: 0.12,
       color: '#D9481F',
-      blurb: '[One sentence about growing up in Austin.] Still home base: I\'ve spent my college summers back here working in finance.',
+      // TODO: add one sentence about growing up in Austin at the start of this blurb.
+      blurb: 'Still home base: I\'ve spent my college summers back here working in finance.',
       intro: 'Where I grew up, and where I came back to for my first finance internships.',
       highlights: [
-        { date: '[Years]', title: '[High school highlight]', text: '[A few sentences: sports, activities, what you were known for.]' },
+        // TODO: fill in a high school highlight, then uncomment:
+        // { date: 'Years', title: 'High school highlight', text: 'A few sentences: sports, activities, what you were known for.' },
         { date: 'Summer 2025', title: 'Financial/AI Analyst · Prophet Capital Asset Management', text: 'Set up Microsoft Copilot to cross-check pitch book analytics against Limited Partnership Agreements, cutting manual review time by more than 50%. Led the firm\'s first company-wide Copilot demo, showing how AI could help the team work through legal documents and financials.' },
         { date: 'Summer 2026', title: 'Acquisition Intern · Altus Equity Group', text: 'Underwrote 55+ deals averaging $25M, working through cash flows, cap rates, DSCR, and levered IRR. Worked with senior leadership on deal strategy and managed broker communications across the active pipeline.' }
       ]
@@ -56,7 +58,8 @@ window.JOURNEY = {
         { date: 'Nov 2025 – May 2026', title: 'Member Educator · Sigma Alpha Epsilon', text: 'Taught 34 new members the chapter\'s history, values, and standards, and organized three cross-chapter mixers to build their professional communication skills.' },
         { date: 'Jan – May 2026', title: 'Equity Research · Hodges Fund', text: 'One of 15 students selected for the Industrials, Materials & Energy house of Baylor\'s $1.8M student-managed fund. Pitched an investment thesis to the faculty advisor and peer analysts; it was added to the portfolio as a position of more than $75,000.' },
         { date: 'Aug 2026 – Spring 2027', title: 'Private Equity Intern · Oakdale Capital', text: 'Due diligence on a pre-revenue growth-equity deal: modeling the key business drivers, joining banker calls, and preparing questions for founders. I also sit in on pipeline meetings with new companies, and I\'ll be working there full time in spring 2027.' },
-        { date: '2026 – 2027', title: 'Sing Chairman', text: '[What Sing is and what you led.]' }
+        // TODO: describe what Sing is and what you led, then uncomment:
+        // { date: '2026 – 2027', title: 'Sing Chairman', text: 'What Sing is and what you led.' }
       ]
     },
     {
