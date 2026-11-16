@@ -631,10 +631,29 @@ if (renderer) {
     caseUI.hidden = true;
     shell.querySelector(`[data-panel="experience"] [data-tab="${job}"]`)?.click();
     backBtn.textContent = '← Back to the briefcase';
-    const p = casePose();
-    fly(p.pos, p.target, isPhone() ? { offX: 0, offY: 0.24 } : { offX: 0.22, offY: 0 }, 800);
+    flyToFile(job, 900);
     showPanel('experience');
   }
+  /* Close-up on one job card: same viewing angle as the open briefcase, pushed in
+     until the card fills the space beside (desktop) or above (phone) the panel. */
+  function filePose(job) {
+    const card = files.find((f) => f.userData.job === job);
+    if (!card) return casePose();
+    const center = card.getWorldPosition(new THREE.Vector3());
+    const base = casePose();
+    const dir = base.pos.clone().sub(base.target).normalize();
+    const dist = (0.31 / Math.sin(THREE.MathUtils.degToRad(camera.fov / 2))) * (isPhone() ? 2.6 : 1.9);
+    return { pos: center.clone().add(dir.multiplyScalar(dist)), target: center };
+  }
+  function flyToFile(job, ms) {
+    const p = filePose(job);
+    fly(p.pos, p.target, isPhone() ? { offX: 0, offY: 0.3 } : { offX: 0.22, offY: 0 }, ms);
+  }
+  // switching jobs with the panel's tabs moves the camera to that job's card
+  shell.querySelector('[data-panel="experience"]')?.addEventListener('click', (e) => {
+    const tab = e.target.closest('[data-tab]');
+    if (tab && e.isTrusted && mode === 'focus' && fromCase) flyToFile(tab.dataset.tab, 600);
+  });
   function closeCase() {
     if (mode !== 'case') return;
     mode = 'returning';
