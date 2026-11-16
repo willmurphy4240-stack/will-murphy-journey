@@ -88,7 +88,9 @@ if (renderer) {
   controls.dampingFactor = 0.07;
   controls.enablePan = false;
   controls.minDistance = 9;
-  controls.maxDistance = 46;
+  // Zoom out only a little past the starting view, so the desk never shrinks to a speck.
+  const homeDist = () => HOME().pos.distanceTo(HOME().target);
+  controls.maxDistance = homeDist() * 1.15;
   controls.minPolarAngle = 0.45;
   controls.maxPolarAngle = 1.22;
   controls.rotateSpeed = 0.7;
@@ -96,10 +98,29 @@ if (renderer) {
   controls.autoRotateSpeed = 0.45;
   let idleTimer;
   controls.addEventListener('start', () => { controls.autoRotate = false; hideHint(); clearTimeout(idleTimer); });
-  controls.addEventListener('end', () => {
+  const resumeSpinLater = () => {
     clearTimeout(idleTimer);
     idleTimer = setTimeout(() => { if (mode === 'explore' && !reduce) controls.autoRotate = true; }, 15000);
-  });
+  };
+  controls.addEventListener('end', resumeSpinLater);
+
+  /* Smooth wheel / trackpad zoom. OrbitControls' own wheel zoom moves 5% per notch in
+     instant jumps (half that on high-DPI screens), so we take over the wheel and ease the
+     camera toward a goal distance instead. Touch pinch still goes through OrbitControls. */
+  let zoomGoal = null;
+  addEventListener('wheel', (e) => {
+    if (e.target !== canvas && !e.target.closest?.('.tag3d')) return;   // the desk or its labels
+    e.preventDefault();
+    e.stopPropagation();                      // keep OrbitControls' jumpy zoom out of it
+    if (!controls.enabled || mode !== 'explore') return;
+    const px = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? innerHeight : 1);
+    const speed = e.ctrlKey ? 0.01 : 0.0018;  // ctrlKey = trackpad pinch, which sends small deltas
+    const from = zoomGoal ?? camera.position.distanceTo(controls.target);
+    zoomGoal = THREE.MathUtils.clamp(from * Math.exp(px * speed), controls.minDistance, controls.maxDistance);
+    controls.autoRotate = false;
+    hideHint();
+    resumeSpinLater();
+  }, { capture: true, passive: false });
 
   /* ---------- lights ---------- */
   scene.add(new THREE.HemisphereLight(0xffe9c8, 0x2a1508, 1.1));
@@ -674,6 +695,7 @@ if (renderer) {
     renderer.setSize(W(), H(), false);
     camera.aspect = W() / H();
     camera.updateProjectionMatrix();
+    controls.maxDistance = homeDist() * 1.15;   // phone and desktop start at different distances
   }
   addEventListener('resize', resize);
   resize();
@@ -705,6 +727,14 @@ if (renderer) {
       camera.lookAt(controls.target);
       if (t >= 1) { const d = tween.done; tween = null; if (d) d(); }
     }
+    if (mode === 'explore' && !tween && zoomGoal !== null) {
+      const off = camera.position.clone().sub(controls.target);
+      const d = off.length();
+      const next = d + (zoomGoal - d) * (1 - Math.exp(-dt * (reduce ? 60 : 14)));
+      camera.position.copy(controls.target).add(off.setLength(next));
+      if (Math.abs(zoomGoal - next) < 0.01) zoomGoal = null;
+    }
+    if (mode !== 'explore' || tween) zoomGoal = null;
     if (mode === 'explore' && !tween) controls.update();
     camera.setViewOffset(W(), H(), view.offX * W(), view.offY * H(), W(), H());
 
