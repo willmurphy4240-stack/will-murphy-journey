@@ -299,9 +299,9 @@ body.journey .globe-loading { position: fixed; left: 50%; bottom: 14vh; transfor
 body.globe-ready .globe-loading { display: none; }
 
 .brand-short { display: none; }
-body.journey { animation: pagein .7s ease both; }
-@keyframes pagein { from { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { body.journey { animation: none; } }
+/* No whole-page fade here: the globe takes a few seconds to build, and a body fade
+   stalls while it does, leaving the heading dim. The heading shows at once and only
+   the globe fades in (see #globe above). */
 
 @media (max-width: 760px) {
   .brand { font-size: 15px; }
@@ -318,6 +318,20 @@ body.journey { animation: pagein .7s ease both; }
   .card-num { font-size: 46px; }
   .card h2 { font-size: 34px; }
   .feature { grid-template-columns: 1fr; padding: 24px; }
+}
+
+/* Phones: the five nav items don't fit on one line, so split the bar in two.
+   Row 1: name + Résumé. Row 2: the page links. */
+@media (max-width: 560px) {
+  .site-nav { flex-wrap: wrap; row-gap: 6px; justify-content: flex-start; }
+  .site-nav .nav-links { display: contents; }
+  .site-nav .nav-links li:has(.nav-resume) { order: 1; margin-left: auto; }
+  .site-nav::after { content: ""; order: 2; flex-basis: 100%; }
+  .site-nav .nav-links li:not(:has(.nav-resume)) { order: 3; margin-right: 14px; }
+  .nav-links a { font-size: 13.5px; }
+  .site-nav .brand-full { display: inline; }
+  .site-nav .brand-short { display: none; }
+  body.journey .hero { padding-top: calc(13vh + 40px); }   /* clear the taller two-row bar */
 }
 
 /* ==========================================================================

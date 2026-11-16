@@ -67,6 +67,8 @@ scene.add(new THREE.AmbientLight(0xfff3e0, 1.6));
 const sun = new THREE.DirectionalLight(0xffe2b8, 1.5);
 scene.add(sun);
 
+// Let the browser paint the heading and nav before the heavy globe build starts.
+await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 0)));
 const globe = await buildGlobe({ radius: 1, dotStep: 0.7 });
 scene.add(globe.group);
 
